@@ -1,5 +1,12 @@
 # Week 0 — Billing and Architecture
 
+## my lucid 
+
+
+
+![my lucid chart screenshoot](/journal/lucid-chart.png "My lucid chart").
+
+[chart link](https://lucid.app/lucidchart/3d905cc3-ebd5-4a99-9e53-d64d5cbc6a85/edit?viewport_loc=-49%2C109%2C2048%2C1203%2CjikxRtXx3.k8&invitationId=inv_27a5207f-82cf-4679-adca-46481e075c28)
 
 ## Getting the AWS CLI Working
 
