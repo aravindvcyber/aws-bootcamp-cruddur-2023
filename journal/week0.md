@@ -36,7 +36,11 @@ tasks:
       cd $THEIA_WORKSPACE_ROOT
 ```
 
-![task in gitpod](/journal/gitpod-task-aws-cli-setup.png "My lucid chart").
+![task in gitpod](/journal/gitpod-task-aws-cli-setup.png "My task in gitpod").
+
+
+
+![task completed aws cli in gitpod](/journal/gitpod-aws-cli-installed.png "My task completed aws cli in gitpod").
 
 We'll also run these commands indivually to perform the install manually
 
@@ -75,9 +79,9 @@ aws sts get-caller-identity
 You should see something like this:
 ```json
 {
-    "UserId": "AIFBZRJIQN2ONP4ET4EK4",
-    "Account": "655602346534",
-    "Arn": "arn:aws:iam::655602346534:user/andrewcloudcamp"
+    "UserId": "AIDAS4FSKHSZNLYLHDK2B",
+    "Account": "197942459570",
+    "Arn": "arn:aws:iam::197942459570:user/bc-user"
 }
 ```
 
@@ -90,6 +94,9 @@ We need to turn on Billing Alerts to recieve alerts...
 - Under `Billing Preferences` Choose `Receive Billing Alerts`
 - Save Preferences
 
+created a zero spend budget
+
+![zero spend budget](/journal/zero-spend-budget.png "My zero spend budget").
 
 ## Creating a Billing Alarm
 
@@ -113,6 +120,8 @@ aws sns subscribe \
     --notification-endpoint your@email.com
 ```
 
+![zero spend budget](/journal/billing-alarm.png "My zero spend budget").
+
 Check your email and confirm the subscription
 
 #### Create Alarm
@@ -125,6 +134,8 @@ Check your email and confirm the subscription
 ```sh
 aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
 ```
+
+![cloudwatch alarm](/journal/alerts-week-0.png "cloudwatch alarm").
 
 ## Create an AWS Budget
 
@@ -145,3 +156,5 @@ aws budgets create-budget \
     --budget file://aws/json/budget.json \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
 ```
+
+![budget created](/journal/week0-budget.png "budget created").
