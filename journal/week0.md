@@ -36,6 +36,8 @@ tasks:
       cd $THEIA_WORKSPACE_ROOT
 ```
 
+![task in gitpod](/journal/gitpod-task-aws-cli-setup.png "My lucid chart").
+
 We'll also run these commands indivually to perform the install manually
 
 ### Create a new User and Generate AWS Credentials
