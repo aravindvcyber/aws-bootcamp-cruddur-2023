@@ -6,8 +6,10 @@ name: Python application
 on:
   push:
     branches: [ "main" ]
+    paths: ["backend-flask/**"]
   pull_request:
     branches: [ "main" ]
+    paths: ["backend-flask/**"]
 
 permissions:
   contents: read
