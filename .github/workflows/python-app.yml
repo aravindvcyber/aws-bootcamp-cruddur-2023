@@ -47,9 +47,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: readmeio/rdme@v8
+      name: validate openapi-3.0.yml
       with:
-        rdme: validate backend-flask/services/openapi-3.0.yml
+        rdme: openapi:validate backend-flask/openapi-3.0.yml
     - uses: readmeio/rdme@v8
+      name: upload openapi-3.0.yml
       with:
         rdme: openapi --version=v1.0 --key=${{ secrets.README_API_KEY }}
   
