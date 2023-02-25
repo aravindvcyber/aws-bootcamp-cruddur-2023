@@ -4,7 +4,7 @@
 
 
 
-![my lucid chart screenshoot](/journal/lucid-chart.png "My lucid chart").
+![my lucid chart screenshoot](/journal/week0/lucid-chart.png "My lucid chart").
 
 [chart link](https://lucid.app/lucidchart/3d905cc3-ebd5-4a99-9e53-d64d5cbc6a85/edit?viewport_loc=-49%2C109%2C2048%2C1203%2CjikxRtXx3.k8&invitationId=inv_27a5207f-82cf-4679-adca-46481e075c28)
 
@@ -36,11 +36,11 @@ tasks:
       cd $THEIA_WORKSPACE_ROOT
 ```
 
-![task in gitpod](/journal/gitpod-task-aws-cli-setup.png "My task in gitpod").
+![task in gitpod](/journal/week0/gitpod-task-aws-cli-setup.png "My task in gitpod").
 
 
 
-![task completed aws cli in gitpod](/journal/gitpod-aws-cli-installed.png "My task completed aws cli in gitpod").
+![task completed aws cli in gitpod](/journal/week0/gitpod-aws-cli-installed.png "My task completed aws cli in gitpod").
 
 We'll also run these commands indivually to perform the install manually
 
@@ -96,7 +96,7 @@ We need to turn on Billing Alerts to recieve alerts...
 
 created a zero spend budget
 
-![zero spend budget](/journal/zero-spend-budget.png "My zero spend budget").
+![zero spend budget](/journal/week0/zero-spend-budget.png "My zero spend budget").
 
 ## Creating a Billing Alarm
 
@@ -120,7 +120,7 @@ aws sns subscribe \
     --notification-endpoint your@email.com
 ```
 
-![zero spend budget](/journal/billing-alarm.png "My zero spend budget").
+![zero spend budget](/journal/week0/billing-alarm.png "My zero spend budget").
 
 Check your email and confirm the subscription
 
@@ -135,7 +135,7 @@ Check your email and confirm the subscription
 aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
 ```
 
-![cloudwatch alarm](/journal/alerts-week-0.png "cloudwatch alarm").
+![cloudwatch alarm](/journal/week0/alerts-week-0.png "cloudwatch alarm").
 
 ## Create an AWS Budget
 
@@ -157,4 +157,4 @@ aws budgets create-budget \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
 ```
 
-![budget created](/journal/week0-budget.png "budget created").
+![budget created](/journal/week0/week0-budget.png "budget created").
