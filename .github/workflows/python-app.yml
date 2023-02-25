@@ -53,5 +53,5 @@ jobs:
     - uses: readmeio/rdme@v8
       name: upload openapi-3.0.yml
       with:
-        rdme: openapi --version=v1.0 --key=${{ secrets.README_API_KEY }}
+        rdme: openapi --version=v1.0 --key=${{ secrets.README_API_KEY }} --id=${{ secrets.README_ID }}
   
