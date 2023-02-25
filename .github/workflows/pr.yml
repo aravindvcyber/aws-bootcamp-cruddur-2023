@@ -1,5 +1,5 @@
 
-name: Create Dev Staging Environment
+name: PR verification flow
 
 on:
   workflow_dispatch:
