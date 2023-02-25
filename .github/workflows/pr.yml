@@ -1,1 +1,84 @@
 
+name: Create Dev Staging Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      PR_number:
+        description: 'Pull request number'
+        required: true
+
+jobs:
+  create:
+    name: 'Scan PR and Comment'
+    defaults:
+      run:
+        shell: bash
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+
+    - name: Verify Pull Request Number
+      uses: actions/github-script@v5
+      id: verify_pr_number
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        result-encoding: string
+        script: |
+          const response = await github.rest.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: ${{ github.event.inputs.PR_number }}
+          });
+          
+          // Check if the pull request is open
+          if (response.data.number !== ${{ github.event.inputs.PR_number }}) {
+            throw new Error('Pull request is not open or number is not valid!');
+          } else {
+            console.log("PR ref: " + response.data.head.ref);
+            return response.data.head.ref;
+          }
+
+    - name: Update Pull Request
+      uses: actions/github-script@v5
+      env:
+        PLAN: ""
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `#### update pull request`
+          github.rest.issues.createComment({
+            issue_number: ${{ github.event.inputs.PR_number }},
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
+              
+    - name: Update status
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `#### PR status created
+          > PR #${{ github.event.inputs.PR_number }} has been verified successfuly
+          
+          URL: http://${{ steps.apply_output.outputs.stdout }}`;
+
+          github.rest.issues.createComment({
+            issue_number: ${{ github.event.inputs.PR_number }},
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
+    
+    # ======================================================
+    # tmate is a nice little utility that allows us to
+    # ssh to the staging server and execute commands
+    # on the server in case any of the steps above fail.
+    #
+    # Otherwise this step will not be executed.
+    # ======================================================
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
