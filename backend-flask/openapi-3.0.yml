@@ -4,7 +4,7 @@ info:
   version: '1.0'
     
 servers:
-  - url: https://api.server.test/v1
+  - url: https://4567-aravindvcyb-awsbootcamp-b1uedcnlq17.ws-us88.gitpod.io
 paths:
   /api/activities/home:
     get:
@@ -84,6 +84,21 @@ paths:
       responses:
         '200':
           description: Returns an array of activities"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+  /api/activities/notifications:
+    get:
+      description: 'Return a feed of activity for all those I follow'
+      tags: 
+        - activities
+      parameters: []
+      responses:
+        '200':
+          description: Returns an array of notifications
           content:
             application/json:
               schema:
