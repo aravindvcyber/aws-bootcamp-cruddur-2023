@@ -37,4 +37,14 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        pytest services/test.py
+        
+  upload-open-api-spec:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@v3
+    - uses: readmeio/rdme@v8
+      with:
+        rdme: openapi --github --version=v1.0 --key=${{ secrets.README_API_KEY }}
+  
