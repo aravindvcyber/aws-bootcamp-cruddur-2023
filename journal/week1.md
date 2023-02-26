@@ -14,7 +14,11 @@
 
 ![docker ports up](/journal/week1/ports-active.png "docker ports up").
 
-![front end first look](/journal/week1/front-end-first-strt.png "front end first look").
+![front end first look](/journal/week1/front-end-first-start.png "front end first look").
+
+![checking api logs](/journal/week1/checking-api-logs.png "checking-api-logs").
+
+
 
 
 ## creating dynamodb schema
@@ -92,6 +96,9 @@ https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/pull/6
 
 ![synk pr pass](/journal/week1/synk-pr-pass.png "synk pr pass").
 
+## Used Readme free trial and updated api docs with github actions
+
+![upload readme api docs](/journal/week1/upload-api-docs.png "upload readme api docs").
 
 ![budget created](/journal/week1/readme-api-full.png "readme-api-full").
 ![budget created](/journal/week1/readme-api.png "readme-api").
