@@ -53,7 +53,6 @@ registerInstrumentations({
       eventNames: ['submit', 'click', 'keypress'],
       shouldPreventSpanCreation: (event, element, span) => {
         span.setAttribute('target.id', element.id)
-        // etc..
       }
     }),
   ],
