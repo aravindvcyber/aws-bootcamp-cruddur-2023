@@ -95,7 +95,7 @@ cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
   expose_headers="location,link",
-  # allow_headers="content-type,if-modified-since,traceparent",
+  #allow_headers="content-type,if-modified-since,traceparent",
   allow_headers="*",
   methods="OPTIONS,GET,HEAD,POST"
 )
@@ -105,34 +105,54 @@ xray_url = os.getenv("AWS_XRAY_URL")
 xray_sampling_path = '../../aws/json/xray.json'
 #xray_recorder.configure(service='Crudder', dynamic_naming=xray_url, sampling=xray_sampling_path)
 xray_recorder.configure(service='crudder-backend-flask', dynamic_naming=xray_url)
-XRayMiddleware(app, xray_recorder) 
+XRayMiddleware(app, xray_recorder)
 xray_recorder.configure(sampling=False)
+
+@xray_recorder.capture('before_request_segment')
+@app.before_request
+def before_request():
+  with tracer.start_as_current_span("before-request-span"):
+      xray_segment = xray_recorder.current_segment()
+      xray_segment.set_user("aravindvcyber")
+      span = trace.get_current_span()
+      now = datetime.now(timezone.utc).astimezone()
+      span.set_attribute("app.now", now.isoformat())
+      span.set_attribute("app.user", "aravindvcyber")
+      span.set_attribute("app.kind", "server")
+      span.set_attribute("http.route", request.path)
+      span.set_attribute("http.referer", request.headers["Referer"])
+      span.set_attribute("meta.traceparent", str(request.headers.get('traceparent')))
+      #with xray_recorder.in_segment('after_request') as segment:
+      timestamp = strftime('[%Y-%b-%d %H:%M]')
+      span.set_attribute("app.request_timestamp", timestamp)
+      xray_segment.put_annotation('time', now.isoformat())
+      xray_segment = xray_recorder.begin_segment('before_request_sub_segment')
+      xray_subsegment = xray_recorder.current_subsegment()
+      xray_subsegment.put_metadata('time_sub', timestamp) if xray_subsegment is not None else xray_segment.put_annotation('time_sub', timestamp)
+      #xray_recorder.end_subsegment()
 
 @xray_recorder.capture('after_request_segment')
 @app.after_request
 def after_request(response):
   with tracer.start_as_current_span("after-request-span"):
       xray_segment = xray_recorder.current_segment()
+      xray_segment.set_user("aravindvcyber")
       span = trace.get_current_span()
       now = datetime.now(timezone.utc).astimezone()
       span.set_attribute("app.now", now.isoformat())
-      
+      span.set_attribute("app.user", "aravindvcyber")
+      span.set_attribute("app.kind", "server")
+      span.set_attribute("http.route", request.path)
       #with xray_recorder.in_segment('after_request') as segment:
       timestamp = strftime('[%Y-%b-%d %H:%M]')
       span.set_attribute("app.result_timestamp", timestamp)
-      
       xray_segment.put_annotation('time', now.isoformat())
       xray_segment = xray_recorder.begin_segment('after_request_sub_segment')
-      xray_segment.put_annotation('time', now.isoformat())
-      xray_segment.set_user("aravindvcyber")
-      span.set_attribute("app.user", "aravindvcyber")
-      span.set_attribute("app.kind", "server")
       xray_subsegment = xray_recorder.current_subsegment()
       xray_subsegment.put_metadata('time_sub', timestamp) if xray_subsegment is not None else xray_segment.put_annotation('time_sub', timestamp)
       LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
       span.set_attribute("app.request_log", str({timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status}))
       span.set_attribute("http.status_code", response.status_code)
-      span.set_attribute("http.route", request.path)
       #xray_recorder.end_subsegment()
   return response
 
@@ -183,7 +203,7 @@ def data_home():
       span = trace.get_current_span()
       now = datetime.now(timezone.utc).astimezone()
       span.set_attribute("app.now", now.isoformat())
-      span.set_attribute("meta.trace_id", str(request.headers.get('traceparent')))
+      span.set_attribute("meta.traceparent", str(request.headers.get('traceparent')))
       span.set_attribute("meta.trace_id", str(uuid.uuid4()))
       span.set_attribute("meta.span_id", str(uuid.uuid4()))
       data = HomeActivities.run(xray_recorder=xray_recorder)
