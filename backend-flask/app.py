@@ -1,8 +1,9 @@
 from flask import Flask
 from flask import request
+
 from flask_cors import CORS, cross_origin
 import os
-
+import uuid
 from services.home_activities import *
 from services.notifications_activities import *
 from services.user_activities import *
@@ -93,7 +94,8 @@ cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
   expose_headers="location,link",
-  allow_headers="content-type,if-modified-since",
+  # allow_headers="content-type,if-modified-since,traceparent",
+  allow_headers="*",
   methods="OPTIONS,GET,HEAD,POST"
 )
 
@@ -101,7 +103,7 @@ cors = CORS(
 xray_url = os.getenv("AWS_XRAY_URL")
 xray_sampling_path = '../../aws/json/xray.json'
 #xray_recorder.configure(service='Crudder', dynamic_naming=xray_url, sampling=xray_sampling_path)
-xray_recorder.configure(service='Crudder', dynamic_naming=xray_url)
+xray_recorder.configure(service='crudder-backend', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder) 
 xray_recorder.configure(sampling=False)
 
@@ -172,8 +174,15 @@ def data_create_message():
 @xray_recorder.capture('## HomeActivities')
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
-  data = HomeActivities.run(xray_recorder=xray_recorder)
-  return data, 200
+  with tracer.start_as_current_span("home-entry"):
+      span = trace.get_current_span()
+      now = datetime.now(timezone.utc).astimezone()
+      span.set_attribute("app.now", now.isoformat())
+      span.set_attribute("meta.trace_id", str(request.headers.get('traceparent')))
+      span.set_attribute("meta.trace_id", str(uuid.uuid4()))
+      span.set_attribute("meta.span_id", str(uuid.uuid4()))
+      data = HomeActivities.run(xray_recorder=xray_recorder)
+      return data, 200
 
 
 @app.route("/api/activities/notifications", methods=['GET'])

@@ -16,6 +16,20 @@ import {
   RouterProvider
 } from "react-router-dom";
 
+import { Provider, ErrorBoundary } from '@rollbar/react'; // Provider imports 'rollbar'
+
+
+
+const rollbarConfig = {
+  accessToken: 'fa6dd05dee5b478d90d8e3e440d8b6f7',
+  environment: 'testenv',
+};
+
+function TestError() {
+  const a = null;
+  return a.hello();
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -58,9 +72,17 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+    <Provider config={rollbarConfig}>
+      <ErrorBoundary>
+        {/* <TestError /> */}
+        <RouterProvider router={router} />
+      </ErrorBoundary>
+    </Provider>
+     
     </>
   );
 }
+
+
 
 export default App;
