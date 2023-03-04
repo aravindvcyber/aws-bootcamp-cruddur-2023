@@ -8,6 +8,10 @@ import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xm
 import { FetchInstrumentation } from '@opentelemetry/instrumentation-fetch';
 
 
+import { UserInteractionInstrumentation } from '@opentelemetry/instrumentation-user-interaction';
+import { registerInstrumentations } from '@opentelemetry/instrumentation';
+
+
 
 const exporter = new OTLPTraceExporter({
      //url: 'https://<your collector endpoint>:443/v1/traces'
@@ -42,13 +46,6 @@ registerInstrumentations({
           }),
      ],
 });
-
-
-
-import { UserInteractionInstrumentation } from '@opentelemetry/instrumentation-user-interaction';
-import { registerInstrumentations } from '@opentelemetry/instrumentation';
-
-
 
 registerInstrumentations({
   instrumentations: [
