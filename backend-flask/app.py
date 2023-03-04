@@ -65,6 +65,7 @@ from flask import got_request_exception
 app = Flask(__name__)
 
 rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
+ENVIRONMENT = os.getenv('ENVIRONMENT')
 @app.before_first_request
 def init_rollbar():
     """init rollbar module"""
@@ -72,7 +73,7 @@ def init_rollbar():
         # access token
         rollbar_access_token,
         # environment name
-        'production',
+        ENVIRONMENT,
         # server root directory, makes tracebacks prettier
         root=os.path.dirname(os.path.realpath(__file__)),
         # flask already sets up logging
@@ -103,23 +104,25 @@ cors = CORS(
 xray_url = os.getenv("AWS_XRAY_URL")
 xray_sampling_path = '../../aws/json/xray.json'
 #xray_recorder.configure(service='Crudder', dynamic_naming=xray_url, sampling=xray_sampling_path)
-xray_recorder.configure(service='crudder-backend', dynamic_naming=xray_url)
+xray_recorder.configure(service='crudder-backend-flask', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder) 
 xray_recorder.configure(sampling=False)
 
-
-@xray_recorder.capture('after_request_sub_capture')
+@xray_recorder.capture('after_request_segment')
 @app.after_request
 def after_request(response):
-  with tracer.start_as_current_span("after-request-mock-data"):
+  with tracer.start_as_current_span("after-request-span"):
+      xray_segment = xray_recorder.current_segment()
       span = trace.get_current_span()
       now = datetime.now(timezone.utc).astimezone()
       span.set_attribute("app.now", now.isoformat())
-      xray_segment = xray_recorder.begin_segment('after_request_sub_begin')
+      
       #with xray_recorder.in_segment('after_request') as segment:
       timestamp = strftime('[%Y-%b-%d %H:%M]')
       span.set_attribute("app.result_timestamp", timestamp)
-      xray_segment = xray_recorder.current_segment()
+      
+      xray_segment.put_annotation('time', now.isoformat())
+      xray_segment = xray_recorder.begin_segment('after_request_sub_segment')
       xray_segment.put_annotation('time', now.isoformat())
       xray_segment.set_user("aravindvcyber")
       span.set_attribute("app.user", "aravindvcyber")
@@ -128,6 +131,8 @@ def after_request(response):
       xray_subsegment.put_metadata('time_sub', timestamp) if xray_subsegment is not None else xray_segment.put_annotation('time_sub', timestamp)
       LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
       span.set_attribute("app.request_log", str({timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status}))
+      span.set_attribute("http.status_code", response.status_code)
+      span.set_attribute("http.route", request.path)
       #xray_recorder.end_subsegment()
   return response
 
@@ -148,7 +153,7 @@ def data_message_groups():
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
 def data_messages(handle):
   user_sender_handle = 'aravindvcyber'
-  user_receiver_handle = request.args.get('user_reciever_handle')
+  user_receiver_handle = request.args.get('handle')
 
   model = Messages.run(user_sender_handle=user_sender_handle, user_receiver_handle=user_receiver_handle)
   if model['errors'] is not None:
