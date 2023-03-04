@@ -5,6 +5,10 @@ tracer = trace.get_tracer("show.activities")
 class ShowActivities:
   def run(activity_uuid):
     with tracer.start_as_current_span("show-activities-mock-data"):
+      model = {
+        'errors': None,
+        'data': None
+      }
       span = trace.get_current_span()
       now = datetime.now(timezone.utc).astimezone()
       span.set_attribute("app.now", now.isoformat())
