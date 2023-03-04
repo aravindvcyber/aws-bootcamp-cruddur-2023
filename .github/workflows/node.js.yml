@@ -45,11 +45,11 @@ jobs:
     #  run: |
      #   npm test
     - name: Notify deploy to Rollbar
-     uses: rollbar/github-deploy-action@2.1.1
-     id: rollbar_deploy
-     with:
-       environment: 'main'
-       version: ${{ github.sha }}
-     env:
-       ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN_FRONTEND }}
-       ROLLBAR_USERNAME: ${{ github.actor }}
+      uses: rollbar/github-deploy-action@2.1.1
+      id: rollbar_deploy
+      with:
+        environment: 'main'
+        version: ${{ github.sha }}
+      env:
+        ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN_FRONTEND }}
+        ROLLBAR_USERNAME: ${{ github.actor }}
