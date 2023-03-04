@@ -23,6 +23,7 @@ class ShowActivities:
           'created_at': (now - timedelta(days=2)).isoformat()
         }
       }]
+      model['data'] = results
       span.set_attribute("app.result_length", len(model['data']))
       subsegment = xray_recorder.begin_subsegment('mock-data')
       dict = {

@@ -41,7 +41,6 @@ class CreateReply:
           'message': message,
           'reply_to_activity_uuid': activity_uuid
         }
-        model['data'] = results
         span.set_attribute("app.result_length", len(model['data']))
         subsegment = xray_recorder.begin_subsegment('mock-data')
         dict = {
