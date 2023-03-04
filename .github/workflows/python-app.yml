@@ -56,4 +56,13 @@ jobs:
       name: upload openapi-3.0.yml
       with:
         rdme: openapi --version=v1.0 --key=${{ secrets.README_API_KEY }} --id=${{ secrets.README_ID }}
+    - name: Notify deploy to Rollbar
+      uses: rollbar/github-deploy-action@2.1.1
+      id: rollbar_deploy
+      with:
+        environment: 'main'
+        version: ${{ github.sha }}
+      env:
+        ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+        ROLLBAR_USERNAME: ${{ github.actor }}
   
