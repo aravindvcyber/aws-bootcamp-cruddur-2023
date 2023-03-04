@@ -10,7 +10,7 @@ opentelemetry-sdk
 opentelemetry-exporter-otlp-proto-http 
 opentelemetry-instrumentation-flask 
 opentelemetry-instrumentation-requests
-
+uuid
 blinker
 rollbar
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
