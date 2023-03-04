@@ -1,13 +1,15 @@
 # Week 2 — Distributed Tracing
 
 
-
 ## Branch
 
 https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/blob/week-2/journal/week2.md
 
-
 ## Codespaces successfully explored
+
+After working with gitpod, I have moved to using codespaces.
+
+Here I used a separate docker compose file
 
 ![Codespaces](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0gqigivmipwt6nc4th6k.png)
 
@@ -47,7 +49,6 @@ Both JS and flash projects are integrated with rollbar
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/hqj9loit78wyqu5lo46s.png)
 
 
-
 ## Error logging
 Trigger an error an observe an error with Rollbar
 
@@ -60,7 +61,7 @@ Trigger an error an observe an error with Rollbar
 
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/2ouwlydevvidwgsfy02i.png)
 
-![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/tl7gp1cx047jui1vaok3.png)
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rqkn3viwaa3zreb4wnj1.png)
 
 ## Cloudwatch
 
@@ -72,12 +73,16 @@ Install WatchTower and write a custom logger to send application log data to - C
 
 
 
-
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3v0spsu054w771u7xhem.png)
 
 ## X-ray
 
-Instrument AWS X-Ray into backend flask application
+Instrument AWS X-Ray into backend flask application to explore traces and service map
+
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/n8yipy6hxpxijnai44db.png)
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/z2vxq22r7qf70k95qlyu.png)
 
 
 ![XRay Insights](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4w6qpegatjjmkct4dem1.png)
@@ -86,6 +91,19 @@ Instrument AWS X-Ray into backend flask application
 ## X-ray daemon
 
 Configure and provision X-Ray daemon within docker-compose and send data back to X-Ray API
+
+```yaml
+  xray-daemon:
+    image: "amazon/aws-xray-daemon"
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_REGION: "ap-south-1"
+    command:
+      - "xray -o -b xray-daemon:2000"
+    ports:
+      - 2000:2000/udp
+```
 
 ![X-ray daemon](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0gqigivmipwt6nc4th6k.png)
 
@@ -96,26 +114,9 @@ Configure and provision X-Ray daemon within docker-compose and send data back to
 
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/1wjxqn5hy0cvdyfyjogl.png)
 
-Posted to rollbar on version and deployment changes
-
-
+Posted to rollbar on version and deployment changes with github actions
 
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cv6oihrcj3fsm8j3g8qq.png)
-
-
-![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rqkn3viwaa3zreb4wnj1.png)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
