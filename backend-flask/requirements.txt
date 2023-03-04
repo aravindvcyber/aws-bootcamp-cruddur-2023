@@ -1,2 +1,15 @@
 flask
 flask-cors
+watchtower
+aws_xray_sdk
+python-dotenv
+
+
+opentelemetry-api 
+opentelemetry-sdk 
+opentelemetry-exporter-otlp-proto-http 
+opentelemetry-instrumentation-flask 
+opentelemetry-instrumentation-requests
+
+blinker
+rollbar
