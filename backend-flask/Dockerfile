@@ -20,7 +20,7 @@ COPY . .
 
 # Set Enviroment Variables (Env Vars)
 # Inside Container and wil remain set when the container is running
-ENV FLASK_DEBUG=development
+ENV FLASK_DEBUG=True
 
 EXPOSE ${PORT}
 
