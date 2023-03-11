@@ -156,11 +156,13 @@ def after_request(response):
       #xray_recorder.end_subsegment()
   return response
 
+@xray_recorder.capture('rollbar_test')
 @app.route('/rollbar/test')
 def rollbar_test():
     rollbar.report_message('Hello World!', 'warning')
     return "Hello World!"
 
+@xray_recorder.capture('message_groups')
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
   user_handle  = 'aravindvcyber'
@@ -170,6 +172,7 @@ def data_message_groups():
   else:
     return model['data'], 200
 
+@xray_recorder.capture('messages_handle')
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
 def data_messages(handle):
   user_sender_handle = 'aravindvcyber'
@@ -182,6 +185,7 @@ def data_messages(handle):
     return model['data'], 200
   return
 
+@xray_recorder.capture('messages')
 @app.route("/api/messages", methods=['POST','OPTIONS'])
 @cross_origin()
 def data_create_message():
@@ -196,7 +200,7 @@ def data_create_message():
     return model['data'], 200
   return
 
-@xray_recorder.capture('## HomeActivities')
+@xray_recorder.capture('activities_home')
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
   with tracer.start_as_current_span("home-entry"):
@@ -209,12 +213,13 @@ def data_home():
       data = HomeActivities.run(xray_recorder=xray_recorder)
       return data, 200
 
-
+@xray_recorder.capture('activities_users')
 @app.route("/api/activities/notifications", methods=['GET'])
 def data_notifications():
   data = NotificationsActivities.run()
   return data, 200
 
+@xray_recorder.capture('activities_handle')
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
 def data_handle(handle):
   model = UserActivities.run(handle)
@@ -223,6 +228,7 @@ def data_handle(handle):
   else:
     return model['data'], 200
 
+@xray_recorder.capture('activities_users')
 @app.route("/api/activities/search", methods=['GET'])
 def data_search():
   term = request.args.get('term')
@@ -233,6 +239,7 @@ def data_search():
     return model['data'], 200
   return
 
+@xray_recorder.capture('activities')
 @app.route("/api/activities", methods=['POST','OPTIONS'])
 @cross_origin()
 def data_activities():
@@ -246,11 +253,13 @@ def data_activities():
     return model['data'], 200
   return
 
+@xray_recorder.capture('activities_activity')
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
 def data_show_activity(activity_uuid):
   data = ShowActivity.run(activity_uuid=activity_uuid)
   return data, 200
 
+@xray_recorder.capture('activities_activity_reply')
 @app.route("/api/activities/<string:activity_uuid>/reply", methods=['POST','OPTIONS'])
 @cross_origin()
 def data_activities_reply(activity_uuid):
