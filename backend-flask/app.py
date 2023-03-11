@@ -3,6 +3,7 @@ from flask import request
 
 from flask_cors import CORS, cross_origin
 import os
+import sys
 import uuid
 from services.home_activities import *
 from services.notifications_activities import *
@@ -15,6 +16,7 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
+from lib.cognito_jwt_token import CognitoJwtToken, extract_access_token, TokenVerifyError
 # HoneyComb ---------
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
@@ -94,10 +96,20 @@ origins = [frontend, backend, pod]
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
-  expose_headers="location,link",
+  #expose_headers="location,link",
   #allow_headers="content-type,if-modified-since,traceparent",
   allow_headers="*",
+  headers=['Content-Type', 'Authorization'], 
+  expose_headers='Authorization',
   methods="OPTIONS,GET,HEAD,POST"
+)
+print({os.getenv("AWS_COGNITO_USER_POOL_ID"), 
+  os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
+  os.getenv("AWS_DEFAULT_REGION")})
+cognito_jwt_token = CognitoJwtToken(
+  user_pool_id=os.getenv("AWS_COGNITO_USER_POOL_ID"), 
+  user_pool_client_id=os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
+  region=os.getenv("AWS_DEFAULT_REGION")
 )
 
 # X-RAY ----------
@@ -210,7 +222,19 @@ def data_home():
       span.set_attribute("meta.traceparent", str(request.headers.get('traceparent')))
       span.set_attribute("meta.trace_id", str(uuid.uuid4()))
       span.set_attribute("meta.span_id", str(uuid.uuid4()))
-      data = HomeActivities.run(xray_recorder=xray_recorder)
+      access_token = extract_access_token(request.headers)
+      try:
+        claims = cognito_jwt_token.verify(access_token)
+        # authenicatied request
+        app.logger.debug("authenicated")
+        app.logger.debug(claims)
+        app.logger.debug(claims['username'])
+        data = HomeActivities.run(cognito_user_id=claims['username'])
+      except TokenVerifyError as e:
+        # unauthenicatied request
+        app.logger.debug(e)
+        app.logger.debug("unauthenicated")
+        data = HomeActivities.run(xray_recorder=xray_recorder)
       return data, 200
 
 @xray_recorder.capture('activities_users')

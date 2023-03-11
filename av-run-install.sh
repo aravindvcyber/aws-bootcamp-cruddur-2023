@@ -19,7 +19,7 @@ sudo apt install -y postgresql-client-13 libpq-dev
 
 cd /workspaces/aws-bootcamp-cruddur-2023/
 
-cd frontend-react-js/
+cd frontend-react-js
 npm ci
 
 cd /workspaces/aws-bootcamp-cruddur-2023/
