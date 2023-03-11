@@ -28,10 +28,14 @@ class UserActivities:
         }]
         model['data'] = results
         span.set_attribute("app.result_length", len(model['data']))
-        subsegment = xray_recorder.begin_subsegment('mock-data')
-        dict = {
-          "now": now.isoformat(),
-          "results-size": len(model['data'])
-        }
-        subsegment.put_metadata('key', dict, 'namespace')
+        try:
+          subsegment = xray_recorder.begin_subsegment('mock-data')
+          dict = {
+            "now": now.isoformat(),
+            "results-size": len(model['data'])
+          }
+          subsegment.put_metadata('key', dict, 'namespace')
+          xray_recorder.end_subsegment()
+        finally:
+          xray_recorder.end_subsegment()
     return model
