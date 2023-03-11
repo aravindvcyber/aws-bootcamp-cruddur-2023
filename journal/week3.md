@@ -4,6 +4,8 @@ This week branch
 
 https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/tree/week-3
 
+https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/blob/main/journal/week3.md
+
 ## Provisioned via ClickOps a Amazon Cognito User Pool
 
 
@@ -71,9 +73,13 @@ Confirmation
 
 ## Show conditional elements and data based on logged in or logged out
 
+> Besides this I learned customising the UI with css as demonstrated this week
+
 ![conditionals](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/efbi7k2j53ejpcejq3nz.png)
 
 
 ### Verify JWT Token server side to serve authenticated API endpoints in Flask Application
 
 ![Verify JWT Token](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3x7k2931izvksj4xqrgh.png)
+
+Here the helper library to verify JWT gave more insights why we need verify them in backend and extract claims, I could imagine lot of possibilities by decrypting using the jwk keys as a generic authorization handler
