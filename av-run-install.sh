@@ -17,9 +17,9 @@ echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" 
 sudo apt update
 sudo apt install -y postgresql-client-13 libpq-dev
 
-cd /workspaces/aws-bootcamp-cruddur-2023/
-
+echo $pwd
 cd frontend-react-js
+
 npm ci
 
 cd /workspaces/aws-bootcamp-cruddur-2023/
