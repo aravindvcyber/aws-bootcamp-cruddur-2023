@@ -2,6 +2,10 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from aws_xray_sdk.core import xray_recorder
 from opentelemetry import trace
+from lib.db import db
+
+# from lib.db import pool, query_wrap_array
+
 tracer = trace.get_tracer("create.activity")
 class CreateActivity:
   def run(message, user_handle, ttl):
@@ -62,9 +66,10 @@ class CreateActivity:
         }
         subsegment.put_metadata('key', dict, 'namespace')  
       else:
+        # self.create_activity()
         model['data'] = {
           'uuid': uuid.uuid4(),
-          'display_name': 'Andrew Brown',
+          'display_name': 'Aravind Vadamalaimuthu',
           'handle':  user_handle,
           'message': message,
           'created_at': now.isoformat(),
@@ -78,3 +83,35 @@ class CreateActivity:
         }
         subsegment.put_metadata('key', dict, 'namespace')
     return model
+
+  def create_activity(user_uuid, message, expires_at):
+    sql = f"""
+    INSERT INTO (
+      user_uuid,
+      message,
+      expires_at
+    )
+    VALUES (
+      "{user_uuid}",
+      "{message}",
+      "{expires_at}"
+    )
+    """
+    print("SQL--------------")
+    print(sql)
+    print("SQL--------------")
+    db.query_commit(sql)
+  
+  def create_activity(handle, message, expires_at):
+    sql = db.template('activities','create')
+    uuid = db.query_commit(sql,{
+      'handle': handle,
+      'message': message,
+      'expires_at': expires_at
+    })
+    return uuid
+  def query_object_activity(uuid):
+    sql = db.template('activities','object')
+    return db.query_object_json(sql,{
+      'uuid': uuid
+    })

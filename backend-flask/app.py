@@ -234,7 +234,7 @@ def data_home():
         # unauthenicatied request
         app.logger.debug(e)
         app.logger.debug("unauthenicated")
-        data = HomeActivities.run(xray_recorder=xray_recorder)
+        data = HomeActivities.run()
       return data, 200
 
 @xray_recorder.capture('activities_users')
@@ -270,7 +270,7 @@ def data_activities():
   user_handle  = 'aravindvcyber'
   message = request.json['message']
   ttl = request.json['ttl']
-  model = CreateActivity.run(message, user_handle, ttl)
+  model = CreateActivity.create_activity(message, user_handle, ttl)
   if model['errors'] is not None:
     return model['errors'], 422
   else:
