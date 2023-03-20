@@ -59,8 +59,3 @@ gp env PROD_CONNECTION_URL="postgresql://root:${PROD_INSTANCE_PASSWORD}@${PROD_I
 
 
 
-
-PG_HOSTNAME='cruddur-db-instance.czz1cuvepklc.ca-central-1.rds.amazonaws.com'
-PG_DATABASE='cruddur'
-PG_USERNAME='root'
-PG_PASSWORD='huEE33z2Qvl383'

@@ -109,7 +109,7 @@ export default function ConfirmationPage() {
             <h2>Confirm your Email</h2>
             <div className='fields'>
               <div className='field text_field email'>
-                <label>Email</label>
+                <label>Username</label>
                 <input
                   type="text"
                   value={email}
