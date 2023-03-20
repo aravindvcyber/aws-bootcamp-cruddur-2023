@@ -270,7 +270,7 @@ def data_activities():
   user_handle  = 'aravindvcyber'
   message = request.json['message']
   ttl = request.json['ttl']
-  model = CreateActivity.create_activity(message, user_handle, ttl)
+  model = CreateActivity.create_activity(user_handle, message, ttl)
   if model['errors'] is not None:
     return model['errors'], 422
   else:

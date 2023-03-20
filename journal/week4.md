@@ -1,23 +1,101 @@
 # Week 4 — Postgres and RDS
 
-Provision an RDS instance
-Temporarily stop an RDS instance
-Remotely connect to RDS instance
-Programmatically update a security group rule
-Write several bash scripts for database operations
-Operate common SQL commands
-Create a schema SQL file by hand
-Work with UUIDs and PSQL extensions
-Implement a postgres client for python using a connection pool
-Troubleshoot common SQL errors
-Implement a Lambda that runs in a VPC and commits code to RDS
-Work with PSQL json functions to directly return json from the database
-Correctly sanitize parameters passed to SQL to execute
+Branch: https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/tree/week-4
 
-# Week 4 — Postgres and RDS
+Page: https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/blob/week-4/journal/week4.md
+
+### Provisioned an RDS instance
+![rds available](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/e07eubr60olvvcfejf3w.png)
+
+### Temporarily stopped an RDS instance
+![rds stopped](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/td0gviit84504kkcfn56.png)
 
 
-To connect to psql via the psql client cli tool remember to use the host flag to specific localhost.
+### Programmatically updated a security group rule
+
+![gitpod task for saving gitpod id](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sp4oz2l847ovs021v77t.png)
+
+![gitpod ip allow in sg](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cme3r4x789x933kwzwaw.png)
+
+### Remotely connectted to RDS instance in gitpod and local
+
+![connect to rds from gitpod](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/17a9kkke6rfne4o96ltf.png)
+
+![connect to rds from local psql](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/95nbtie3shptwwgkmi61.png)
+
+### Written necessary bash scripts for database operations
+
+![bash scripts for database operations](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/56q2nb5p29r63ow4gu3o.png)
+
+### Operate common SQL commands using psql client
+
+![sample commands](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/hjfo7hi9rzdwt63j4dgx.png)
+
+
+### Create a schema SQL file by hand
+
+
+`backend-flask/db/schema.sql`
+
+### Work with UUIDs and PSQL extensions
+
+![list extensions](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ukt0quok5kumzggeo929.png)
+
+![list extensions functions](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g375wwpw1e2ze5mj6vye.png)
+
+### Implemented a postgres client for python using a connection pool
+
+`backend-flask/lib/db.py`
+
+### Troubleshooted common SQL errors based on the error seen in the log
+
+![rollbar backend error](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/l38wktztd5lekxllahm9.png)
+
+#### sample example pgerror
+
+![sample example pgerror](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/v95o9p8wymzcdawgbofa.png)
+
+### Implemented a Lambda that runs in a VPC and commits code to RDS
+
+![lambda runtime](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/lahn2ohdzx9sbsp6wfad.png)
+
+![cognito post confirmation trigger](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/en93c7ymv8ajwy66o6av.png)
+
+
+![lambda ec2 network permissions inside vpc](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/qdxhye6xjgjq26wmoos8.png)
+
+
+![lambda vpc security group](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5pglv82six3jzpul00dc.png)
+
+
+
+![test event](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nhswvi3bnwsjhgadw7l8.png)
+
+
+![cloudwatch log](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/grllsd28bepx5luwl215.png)
+
+#### Work with PSQL json functions to directly return json from the database
+
+
+![wrapper functions json](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/h0jhvgwyn4tiqnojwyig.png)
+
+
+### Correctly sanitize parameters passed to SQL to execute
+
+![sanitize with parameters](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dxdqli75di3i322jcjgu.png)
+
+
+
+
+
+
+### To connect to psql via the psql client cli tool remember to use the host flag to specific localhost.
+
+
+
+
+### Other notes taken based on the session in this bootcamp
+
 
 ```
 psql -Upostgres --host localhost
