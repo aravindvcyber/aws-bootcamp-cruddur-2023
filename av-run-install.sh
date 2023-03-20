@@ -18,7 +18,7 @@ sudo apt update
 sudo apt install -y postgresql-client-13 libpq-dev
 
 echo $pwd
-cd frontend-react-js
+cd /workspaces/aws-bootcamp-cruddur-2023/frontend-react-js
 
 npm ci
 
