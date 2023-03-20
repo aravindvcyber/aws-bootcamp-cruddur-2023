@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 from aws_xray_sdk.core import xray_recorder
 from opentelemetry import trace
 from lib.db import db
+import json
 
 # from lib.db import pool, query_wrap_array
 
@@ -84,32 +85,56 @@ class CreateActivity:
         subsegment.put_metadata('key', dict, 'namespace')
     return model
 
-  def create_activity(user_uuid, message, expires_at):
-    sql = f"""
-    INSERT INTO (
-      user_uuid,
-      message,
-      expires_at
-    )
-    VALUES (
-      "{user_uuid}",
-      "{message}",
-      "{expires_at}"
-    )
-    """
-    print("SQL--------------")
-    print(sql)
-    print("SQL--------------")
-    db.query_commit(sql)
+  # def create_activity(user_uuid, message, expires_at):
+  #   sql = f"""
+  #   INSERT INTO (
+  #     user_uuid,
+  #     message,
+  #     expires_at
+  #   )
+  #   VALUES (
+  #     "{user_uuid}",
+  #     "{message}",
+  #     "{expires_at}"
+  #   )
+  #   """
+  #   print("SQL--------------")
+  #   print(sql)
+  #   print("SQL--------------")
+  #   db.query_commit(sql)
   
-  def create_activity(handle, message, expires_at):
+  def create_activity(handle, message, ttl):
     sql = db.template('activities','create')
-    uuid = db.query_commit(sql,{
+    model = {
+        'errors': None,
+        'data': None
+    }
+    now = datetime.now(timezone.utc).astimezone()
+    if (ttl == '30-days'):
+      ttl_offset = timedelta(days=30) 
+    elif (ttl == '7-days'):
+      ttl_offset = timedelta(days=7) 
+    elif (ttl == '3-days'):
+      ttl_offset = timedelta(days=3) 
+    elif (ttl == '1-day'):
+      ttl_offset = timedelta(days=1) 
+    elif (ttl == '12-hours'):
+      ttl_offset = timedelta(hours=12) 
+    elif (ttl == '3-hours'):
+      ttl_offset = timedelta(hours=3) 
+    elif (ttl == '1-hour'):
+        ttl_offset = timedelta(hours=1) 
+    else:
+        model['errors'] = ['ttl_blank']
+    params = {
       'handle': handle,
       'message': message,
-      'expires_at': expires_at
-    })
-    return uuid
+      'expires_at': (now + ttl_offset).isoformat()
+    }
+    uuid = db.query_commit(sql,params)
+    model["data"] = str(uuid)
+    return model
+
   def query_object_activity(uuid):
     sql = db.template('activities','object')
     return db.query_object_json(sql,{
