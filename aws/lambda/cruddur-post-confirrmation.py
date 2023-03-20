@@ -3,9 +3,10 @@ import psycopg2
 import os
 
 def lambda_handler(event, context):
+    print(json.dumps(event))
     user = event['request']['userAttributes']
     print('userAttributes')
-    print(user)
+    print(json.dumps(user))
 
     user_display_name  = user['name']
     user_email         = user['email']
@@ -26,12 +27,14 @@ def lambda_handler(event, context):
           '{user_handle}', 
           '{user_cognito_id}'
         )
+        RETURNING uuid;
       """
       print('SQL Statement ----')
       print(sql)
       conn = psycopg2.connect(os.getenv('CONNECTION_URL'))
       cur = conn.cursor()
       cur.execute(sql)
+      print(cur.fetchone()[0])
       conn.commit() 
 
     except (Exception, psycopg2.DatabaseError) as error:

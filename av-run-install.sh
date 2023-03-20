@@ -23,3 +23,7 @@ cd /workspaces/aws-bootcamp-cruddur-2023/frontend-react-js
 npm ci
 
 cd /workspaces/aws-bootcamp-cruddur-2023/
+
+export GITPOD_IP=$(curl ifconfig.me)
+gp env GITPOD_IP=$(curl ifconfig.me)
+source  "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds-update-sg-rule"
