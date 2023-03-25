@@ -16,3 +16,5 @@ else
 fi
 
 psql $URL cruddur < $seed_path
+
+echo "=== Seeding done"
