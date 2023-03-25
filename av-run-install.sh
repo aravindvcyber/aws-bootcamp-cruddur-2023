@@ -17,13 +17,13 @@ echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" 
 sudo apt update
 sudo apt install -y postgresql-client-13 libpq-dev
 
-echo $pwd
-cd /workspaces/aws-bootcamp-cruddur-2023/frontend-react-js
+# echo $pwd
+# cd /workspaces/aws-bootcamp-cruddur-2023/frontend-react-js
 
-npm ci
+# npm ci
 
 cd /workspaces/aws-bootcamp-cruddur-2023/
 
 export GITPOD_IP=$(curl ifconfig.me)
 gp env GITPOD_IP=$(curl ifconfig.me)
-source  "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds-update-sg-rule"
+source  "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds/update-sg-rule"
