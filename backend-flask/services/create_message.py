@@ -115,7 +115,9 @@ class CreateMessage:
             other_user_display_name=other_user['display_name'],
             other_user_handle=other_user['handle']
           )
+        
         model['data'] = data
+        print(model)
         span.set_attribute("app.result_length", len(model['data']))
         subsegment = xray_recorder.begin_subsegment('mock-data')
         dict = {
