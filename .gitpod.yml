@@ -14,6 +14,14 @@ tasks:
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
     command: aws --version
+  - name: flask
+    command: |
+      cd backend-flask
+      pip install -r requirements.txt
+  - name: momento
+    before: |
+      brew tap momentohq/tap
+      brew install momento-cli
   - name: react-js
     command: |
       cd frontend-react-js
