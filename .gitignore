@@ -1,3 +1,4 @@
 backend-flask/.env
 frontend-react-js/build
+docker/*
 aws/layers/psycopg2/
