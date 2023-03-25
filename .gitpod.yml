@@ -57,3 +57,4 @@ vscode:
     - ms-python.python
     - eamodio.gitlens
     - mhutchie.git-graph
+    - ms-azuretools.vscode-docker

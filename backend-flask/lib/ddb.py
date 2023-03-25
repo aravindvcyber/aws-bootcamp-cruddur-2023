@@ -11,6 +11,7 @@ class Ddb:
     if endpoint_url:
       attrs = { 'endpoint_url': endpoint_url }
     else:
+      print("connecting to prod dynamodb")
       attrs = {}
     dynamodb = boto3.client('dynamodb',**attrs)
     return dynamodb

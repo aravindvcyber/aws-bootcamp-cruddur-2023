@@ -9,7 +9,7 @@ dynamodb = boto3.resource(
 )
 
 def lambda_handler(event, context):
-  print('event-data',event)
+  print('event-data',json.dumps(event))
 
   eventName = event['Records'][0]['eventName']
   if (eventName == 'REMOVE'):
@@ -29,7 +29,7 @@ def lambda_handler(event, context):
       IndexName=index_name,
       KeyConditionExpression=Key('message_group_uuid').eq(group_uuid)
     )
-    print("RESP ===>",data['Items'])
+    print("RESP ===>",json.dumps(data['Items']))
     
     # recreate the message group rows with new SK value
     for i in data['Items']:
@@ -47,4 +47,4 @@ def lambda_handler(event, context):
           'user_uuid': i['user_uuid']
         }
       )
-      print("CREATE ===>",response)
+      print("CREATE ===>",json.dumps(response))
