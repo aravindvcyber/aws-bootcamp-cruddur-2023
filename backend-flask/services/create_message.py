@@ -52,8 +52,8 @@ class CreateMessage:
         }
         subsegment.put_metadata('key', dict, 'namespace')
         model['data'] = {
-          'display_name': 'Andrew Brown',
-          'handle':  user_sender_handle,
+          # 'display_name': 'Andrew Brown',
+          'handle':  cognito_user_id,
           'message': message
         }
         span.set_attribute("app.result_length", len(model['data']))
