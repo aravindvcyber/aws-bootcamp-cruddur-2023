@@ -224,6 +224,8 @@ def data_messages(message_group_uuid):
     app.logger.debug("authenicated")
     app.logger.debug(claims)
     cognito_user_id = claims['sub']
+    print({cognito_user_id,
+        message_group_uuid})
     model = Messages.run(
         cognito_user_id=cognito_user_id,
         message_group_uuid=message_group_uuid
