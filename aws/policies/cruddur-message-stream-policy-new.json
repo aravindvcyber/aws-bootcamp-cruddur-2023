@@ -1,0 +1,38 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:Query"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:ap-south-1:*******:table/cruddur-messages/index/message-group-sk-index",
+                "arn:aws:dynamodb:ap-south-1:*******:table/cruddur-messages"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction",
+                "dynamodb:GetShardIterator",
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:ap-south-1:*******:table/cruddur-messages/stream/2023-03-25T18:11:15.897",
+                "arn:aws:lambda:ap-south-1:*******:function:cruddur-messaging-stream"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": "dynamodb:ListStreams",
+            "Resource": "arn:aws:dynamodb:ap-south-1:*******:table/cruddur-messages"
+        }
+    ]
+}
