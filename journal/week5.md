@@ -1,6 +1,131 @@
 # Week 5 — DynamoDB and Serverless Caching
 
+Branch link https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/tree/week-5
 
+Readme for better view with images https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/blob/main/journal/week5.md
+
+### Integrated with dynamodb
+
+![messages screen](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/o97w0qgwl0w7z1c40uw6.png)
+
+
+![table created](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kptjnmx6ix0cjcf87eoj.png)
+
+
+![message group](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3quv3e2jzipe6nb6eowd.png)
+![cruddur home from ddb](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/zdh703gq3857g4hkpf45.png)
+
+
+### Data Modelling a Direct Messaging System using Single Table Design 
+
+
+I have also tried this in NoSQL workbench to query the data and use indexs and GSI
+
+
+![workbench ops 1](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/x0w0l4f7jlplg7016gy9.png)
+![workbench ops 2](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/af9ubk5s66kj0idqc810.png)
+
+### Implemented DynamoDB query using Single Table Design
+
+![query using modeller](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wbcrppd2mf8steliliv2.png)
+
+![backend connecting to prod](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/43sv115savc1slvwtmrf.png)
+
+![scan or query console](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/z4jdwh23gazcmb9qmvtg.png)
+
+
+### Provisioning DynamoDB tables with Provisioned Capacity
+
+![table with rcus wcus](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kptjnmx6ix0cjcf87eoj.png)
+
+### Utilizing a Global Secondary Index (GSI) with DynamoDB
+
+![gsi ddb](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ch1ilhazergx3fwhzhou.png)
+### Rapid data modelling and implementation of DynamoDB with DynamoDB Local
+
+![dockers](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/85u44a4krhickylo8zin.png)
+
+![ddb schema load](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/k6pv2cnsj5q7rtl3m9bx.png)
+
+![seed and list tables](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/125fbv3a4aoe40m74gag.png)
+
+### Writing utility scripts to easily setup and teardown and debug DynamoDB data
+
+![utility scripts](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ktndul3wjpncvgog7gns.png)
+
+### Implemented dynamodb steams with VPC endpoint
+
+![stream created](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sxlb95r8stm9ru08gt1r.png)
+![trigger connect with lambda](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g5hgaqp7meznw3k91sr9.png)
+
+![vpc endpoint for dynamodb](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/lxoyfl1oatex6x4hu6q0.png)
+
+### Implemented the lambda to use VPC endpoint
+
+lambda code
+
+https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/blob/main/aws/lambda/cruddur-messaging-stream.py
+
+![lambda](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mondgdy6gwigox9cqcf2.png)
+![lambda vpc](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/1fstszlquo4vfzstxgx2.png)
+
+
+
+
+customised permission policy for the lambda execution role 
+
+```json 
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:Query"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:ap-south-1:*******:table/cruddur-messages/index/message-group-sk-index",
+                "arn:aws:dynamodb:ap-south-1:*******:table/cruddur-messages"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction",
+                "dynamodb:GetShardIterator",
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:ap-south-1:*******:table/cruddur-messages/stream/2023-03-25T18:11:15.897",
+                "arn:aws:lambda:ap-south-1:*******:function:cruddur-messaging-stream"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": "dynamodb:ListStreams",
+            "Resource": "arn:aws:dynamodb:ap-south-1:*******:table/cruddur-messages"
+        }
+    ]
+}
+```
+
+![dynamodb permissions](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kr4bg28xqn39jk2ejggb.png)
+![ec2 permissions](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/e48ok5krr2n7kzijc7ui.png)
+
+
+### Dynamodb stream is used to trigger lambda
+
+This is used to delete existing messages in a group and recreate them when new messages are posted
+
+![lambda cloudwatch logs seen](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ghhf6lw30ult3uxzlfre.png)
+
+![added some pretty log](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sma1h77tvcba37m6n34i.png)
 
 
 # Other notes:
