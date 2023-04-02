@@ -175,6 +175,13 @@ def rollbar_test():
     rollbar.report_message('Hello World!', 'warning')
     return "Hello World!"
 
+@xray_recorder.capture('api_health_check')
+@app.route('/api/health-check')
+def health_check():
+  hello = None
+  hello()
+  return {'success': True}, 200
+
 @xray_recorder.capture('message_groups')
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():

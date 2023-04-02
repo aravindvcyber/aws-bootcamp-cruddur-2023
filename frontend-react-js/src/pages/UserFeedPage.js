@@ -9,7 +9,7 @@ import ActivityForm from '../components/ActivityForm';
 
 
 // import Cookies from 'js-cookie'
-import checkAuth from '../lib/CheckAuth';
+import {checkAuth, getAccessToken} from '../lib/CheckAuth';
 
 export default function UserFeedPage() {
   const [activities, setActivities] = React.useState([]);
