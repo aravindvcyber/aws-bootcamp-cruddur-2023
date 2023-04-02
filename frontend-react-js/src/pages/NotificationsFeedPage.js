@@ -9,7 +9,7 @@ import ReplyForm from '../components/ReplyForm';
 
 
 // import Cookies from 'js-cookie'
-import checkAuth from '../lib/CheckAuth';
+import {checkAuth, getAccessToken} from '../lib/CheckAuth';
 
 export default function NotificationsFeedPage() {
   const [activities, setActivities] = React.useState([]);
