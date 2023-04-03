@@ -1,6 +1,6 @@
 #! /usr/bin/bash
 if [ -z "$1" ]; then
-  echo "No TASK_ID argument supplied eg ./bin/ecs/connect-to-frontend-react-js 99b2f8953616495e99545e5a6066fbb5d"
+  echo "No TASK_ID argument supplied eg ./bin/ecs/connect-to-frontend-react-js 9803a36715144ade8fbcc4f83b35e7b9"
   exit 1
 fi
 TASK_ID=$1
