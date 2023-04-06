@@ -1,0 +1,23 @@
+{
+     "cluster": "cruddur",
+     "launchType": "FARGATE",
+     "desiredCount": 1,
+     "enableECSManagedTags": true,
+     "enableExecuteCommand": true,
+     "networkConfiguration": {
+          "awsvpcConfiguration": {
+               "assignPublicIp": "ENABLED",
+               "securityGroups": [
+                    "sg-04b2d4ab9d8bbbaa3"
+               ],
+               "subnets": [
+                    "subnet-09027c709eff3144b",
+                    "subnet-0359ee57f38e3aca6",
+                    "subnet-074c1e21ea860b6d4"
+               ]
+          }
+     },
+     "propagateTags": "SERVICE",
+     "serviceName": "xray-daemon",
+     "taskDefinition": "xray-daemon"
+}

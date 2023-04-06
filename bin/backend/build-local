@@ -9,19 +9,18 @@ BIN_PATH=$(dirname $BACKEND_PATH)
 PROJECT_PATH=$(dirname $BIN_PATH)
 BACKEND_FLASK_PATH="$PROJECT_PATH/backend-flask"
 
-docker rmi backend-flask-prod
+docker rmi backend-flask
 
 docker build \
--f "$BACKEND_FLASK_PATH/Dockerfile.prod" \
--t backend-flask-prod \
+-f "$BACKEND_FLASK_PATH/Dockerfile" \
+-t backend-flask \
 "$BACKEND_FLASK_PATH/."
 
-
 # docker build \
-# --build-arg ENVIRONMENT="PROD" \
+# --build-arg ENVIRONMENT="DEV" \
 # --build-arg CONNECTION_URL="${PROD_CONNECTION_URL}" \
-# --build-arg FRONTEND_URL="http://${AWS_ELB}" \
-# --build-arg BACKEND_URL="http://${AWS_ELB}:4567" \
+# --build-arg FRONTEND_URL="https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" \
+# --build-arg BACKEND_URL="https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" \
 # --build-arg POD_HOST_URL="https://${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" \
 # --build-arg OTEL_SERVICE_NAME='crudder-backend-flask' \
 # --build-arg OTEL_EXPORTER_OTLP_ENDPOINT="https://api.honeycomb.io" \
@@ -34,6 +33,6 @@ docker build \
 # --build-arg ROLLBAR_ACCESS_TOKEN="${ROLLBAR_ACCESS_TOKEN}" \
 # --build-arg AWS_COGNITO_USER_POOL_ID="${AWS_COGNITO_USER_POOL_ID}" \
 # --build-arg AWS_COGNITO_USER_POOL_CLIENT_ID="${AWS_COGNITO_USER_POOL_CLIENT_ID}" \
-# -f "$BACKEND_FLASK_PATH/Dockerfile.prod" \
-# -t backend-flask-prod \
+# -f "$BACKEND_FLASK_PATH/Dockerfile" \
+# -t backend-flask \
 # "$BACKEND_FLASK_PATH/."

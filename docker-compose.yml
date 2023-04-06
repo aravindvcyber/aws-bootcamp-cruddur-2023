@@ -22,7 +22,7 @@ services:
       # AWS_COGNITO_USER_POOL_ID: "${AWS_COGNITO_USER_POOL_ID}"
       # AWS_COGNITO_USER_POOL_CLIENT_ID: "${AWS_COGNITO_USER_POOL_CLIENT_ID}" 
     env_file:
-      - backend-flask.env
+      - backend-flask-local.env
     build: ./backend-flask
     ports:
       - "4567:4567"
@@ -39,7 +39,7 @@ services:
     #   REACT_APP_AWS_COGNITO_USER_POOL_CLIENT_ID: "${AWS_COGNITO_USER_POOL_CLIENT_ID}"
     #   # REACT_APP_IDENTITY_POOL_ID:
     env_file:
-      - frontend-react-js.env
+      - frontend-react-js-local.env
     build: ./frontend-react-js
     ports:
       - "3000:3000"

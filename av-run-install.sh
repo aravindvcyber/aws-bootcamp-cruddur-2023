@@ -31,3 +31,6 @@ curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64
 sudo dpkg -i session-manager-plugin.deb
 rm session-manager-plugin.deb
 
+
+./bin/ecr/login
+

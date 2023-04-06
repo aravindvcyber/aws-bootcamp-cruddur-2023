@@ -9,6 +9,7 @@
        "FARGATE" 
      ],
      "containerDefinitions": [
+      
        {
          "name": "frontend-react-js",
          "image": "197942459570.dkr.ecr.ap-south-1.amazonaws.com/frontend-react-js",
@@ -19,8 +20,9 @@
             "curl -f http://localhost:3000 || exit 1"
           ],
           "interval": 30,
-          "timeout": 5,
-          "retries": 3
+          "timeout": 15,
+          "retries": 2,
+          "startPeriod": 15
         },
          "portMappings": [
            {
@@ -34,11 +36,20 @@
          "logConfiguration": {
            "logDriver": "awslogs",
            "options": {
-               "awslogs-group": "cruddur",
+               "awslogs-group": "/cruddur/cluster",
                "awslogs-region": "ap-south-1",
                "awslogs-stream-prefix": "frontend-react-js"
            }
-         }
+         },
+         "environment": [
+          {"name": "REACT_APP_BACKEND_URL", "value": "https://cruddur.sandbox.exploringserverless.com"},
+          {"name": "REACT_APP_AWS_PROJECT_REGION", "value": "ap-south-1"},
+          {"name": "REACT_APP_AWS_COGNITO_REGION", "value": "ap-south-1"},
+          {"name": "REACT_APP_AWS_COGNITO_USER_POOL_ID", "value": "ap-south-1_icQImvJoq"},
+          {"name": "REACT_APP_AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "6rrcnt129rrt9849mdm0l6743v"}
+        ],
+        "secrets": [
+        ]
        }
      ]
    }

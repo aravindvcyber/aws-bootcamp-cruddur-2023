@@ -6,3 +6,5 @@ docker/**/*
 
 frontend-react-js/build/*
 *.env
+frontend-react-js/.env-local
+frontend-react-js/.env-prod
