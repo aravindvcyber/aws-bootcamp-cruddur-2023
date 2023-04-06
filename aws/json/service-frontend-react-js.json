@@ -4,6 +4,13 @@
      "desiredCount": 1,
      "enableECSManagedTags": true,
      "enableExecuteCommand": true,
+     "loadBalancers": [
+      {
+          "targetGroupArn": "arn:aws:elasticloadbalancing:ap-south-1:197942459570:targetgroup/cruddur-frontend-react-js-tg/8791aec9759cb178",
+          "containerName": "frontend-react-js",
+          "containerPort": 3000
+      }
+    ],
      "networkConfiguration": {
        "awsvpcConfiguration": {
          "assignPublicIp": "ENABLED",

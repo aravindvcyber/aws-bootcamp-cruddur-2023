@@ -92,8 +92,10 @@ RequestsInstrumentor().instrument()
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
+backendGitpod = os.getenv('BACKEND_URL_GITPOD')
+frontendGitpod = os.getenv('FRONTEND_URL_GITPOD')
 pod = os.getenv('POD_HOST_URL')
-origins = [frontend, backend, pod]
+origins = [frontend, backend, pod, backendGitpod, frontendGitpod]
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
@@ -133,7 +135,8 @@ def before_request():
       span.set_attribute("app.user", "aravindvcyber")
       span.set_attribute("app.kind", "server")
       span.set_attribute("http.route", request.path)
-      span.set_attribute("http.referer", request.headers["Referer"])
+      span.set_attribute("http.referer", request.headers.get("Referer","Direct"))
+      # print(request.headers)
       span.set_attribute("meta.traceparent", str(request.headers.get('traceparent')))
       #with xray_recorder.in_segment('after_request') as segment:
       timestamp = strftime('[%Y-%b-%d %H:%M]')

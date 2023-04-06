@@ -1,0 +1,26 @@
+{
+  "family": "xray-daemon",
+  "executionRoleArn": "arn:aws:iam::197942459570:role/CruddurServiceExecutionRole",
+  "taskRoleArn": "arn:aws:iam::197942459570:role/CruddurTaskRole",
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "requiresCompatibilities": [ 
+    "FARGATE" 
+  ],
+  "containerDefinitions": [
+    {
+      "name": "xray",
+      "image": "public.ecr.aws/xray/aws-xray-daemon" ,
+      "essential": true,
+      "user": "1337",
+      "portMappings": [
+        {
+          "name": "xray",
+          "containerPort": 2000,
+          "protocol": "udp"
+        }
+      ]
+    }
+  ]
+}

@@ -16,4 +16,4 @@ aws ecs update-service \
 --cluster $CLUSTER_NAME \
 --service $SERVICE_NAME \
 --task-definition $LATEST_TASK_DEFINITION_ARN \
---force-new-deployment
+--force-new-deployment | jq .

@@ -1,4 +1,61 @@
-# Week 6 — Deploying Containers
+# Week 6 & 7  — Deploying Containers with Fargate
+
+Branch https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/tree/week-6
+
+Readme since I could not add every commits more detail customised here
+
+https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/blob/week-6/journal/week6.md
+
+https://cruddur.sandbox.exploringserverless.com/
+
+Here is the site: Do checkout, let me know some comments
+
+
+
+## Summary with inline notes
+
+* Deployed ECS Cluster using ECS Service Connect
+* Deployed serverless containers using Fargate for the Backend and Frontend Application
+
+* Routed traffic to the frontend and backend on different subdomains using Application Load Balancer
+* Secured our flask container
+* Created several personal bash utility scripts to easily work with serverless containers.
+
+### Both a domain and setup the app
+
+Setup the ELB to use only 80 and 443
+with necessary auto forwarding for my site
+
+![certificate generated](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kuo5x1pheo4m3l8orv09.png)
+
+![alb listeners](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/blzenbbrv631mfu78ayz.png)
+
+![alb ssl port rules](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8sdac54znqm5f8l9sb09.png)
+![alb ssl port rules explained](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/oqfoobuofjcr1q9a3e5u.png)
+
+
+![domain with ssl](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dwndcc6751daf961egqk.png)
+
+![domain with ssl 2](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c2wzr3wubql9zjx4siyc.png)
+
+
+
+
+
+### 3 Services Attempt
+
+Also I tried to setup three sevices moving out xray demon for some time to see how it behaves
+
+![3 services attempt](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3wnlsfb480fih6yuwgns.png)
+
+### Container Insights
+
+![container insights 3](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ubgf2f8t5vh28cu0jau4.png)
+
+![container insights 2](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nkiq86qnabqqunj4ydyl.png)
+
+
+![container insights](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/13q2j61c0k7ok0zaad4p.png)
 
 
 Create CloudWatch Log Group
@@ -8,6 +65,9 @@ aws logs create-log-group --log-group-name "/cruddur/cluster"
 aws logs put-retention-policy --log-group-name "/cruddur/cluster" --retention-in-days 1
 ```
 
+
+![cloudwatch](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vkr6vctqat0novhtb2jw.png)
+
 Create ECS Cluster
 
 ```sh
@@ -15,6 +75,8 @@ aws ecs create-cluster \
 --cluster-name cruddur \
 --service-connect-defaults namespace=cruddur
 ```
+
+![create cluster](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4no3yhehfnfw7y92s3jz.png)
 
 Get ECS Opitmized EC2 AMI
 
@@ -25,14 +87,28 @@ aws ssm get-parameters --names /aws/service/ecs/optimized-ami/amazon-linux-2/rec
 ```
 
 ```sh
-aws ec2 describe-images --owner amazon --filters "Name=description,Values=\"*Amazon Linux AMI 2.0.20230321 x86_64 ECS HVM GP2*\"" --query "Images[?ImageLocation=='amazon/amzn2-ami-ecs-hvm-2.0.20230321-x86_64-ebs'].ImageId" --output text
+aws ssm get-parameters --names /aws/service/ecs/optimized-ami/amazon-linux-2/arm64/recommended --region ap-south-1 | jq -r '.Parameters[0].Value' | jq .
+```
 
+```sh
+aws ec2 describe-images --owner amazon --filters "Name=description,Values=\"*Amazon Linux AMI 2.0.20230321 x86_64 ECS HVM GP2*\"" --query "Images[?ImageLocation=='amazon/amzn2-ami-minimal-hvm-2.0.20230320.0-arm64-ebs'].ImageId" --output text
 
 ami-0352888a5fa748216
 ```
 
 ```sh
+aws ec2 describe-images --owner amazon --filters "Name=description,Values=\"*Amazon Linux AMI 2.0.20230321 arm64 ECS HVM GP2*\"" --query "Images[?ImageLocation=='amazon/amzn2-ami-ecs-hvm-2.0.20230321-arm64-ebs'].ImageId" --region ap-south-1 --output text
+
+ami-02e3648333752dfc5
+```
+
+```sh
 export ECS_OPTIMIZED_AMI=$(aws ec2 describe-images --owner amazon --filters "Name=description,Values=\"*Amazon Linux AMI 2.0.20230321 x86_64 ECS HVM GP2*\"" --query "Images[?ImageLocation=='amazon/amzn2-ami-ecs-hvm-2.0.20230321-x86_64-ebs'].ImageId" --output text)
+
+```
+
+```sh
+export ECS_OPTIMIZED_AMI_ARM=$(aws ec2 describe-images --owner amazon --filters "Name=description,Values=\"*Amazon Linux AMI 2.0.20230321 arm64 ECS HVM GP2*\"" --query "Images[?ImageLocation=='amazon/amzn2-ami-ecs-hvm-2.0.20230321-arm64-ebs'].ImageId" --region ap-south-1 --output text)
 
 ```
 
@@ -43,6 +119,21 @@ Base64 encode launching the cluster
 echo '#!/bin/bash\necho "ECS_CLUSTER=cruddur" >> /etc/ecs/ecs.config' | base64 -w 0
 ```
 
+
+
+
+
+![describe ecs ami](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pkbqc2ggn7kidj2bec4.png)
+![create launch template](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3brpwqhj6d5twgre6wws.png)
+
+![launch template](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dl4m5vbmom60jqi6d9f1.png)
+
+
+
+### Installing sessions manager
+
+
+![session manager](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/h174rlhwstaenss8qcrj.png)
 
 ### Create Instance Profile
 
@@ -125,6 +216,10 @@ export CRUD_CLUSTER_SG=$(aws ec2 describe-security-groups \
 --output text)
 ```
 
+
+![alb security group changes making only 80 and 443 public](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/07b3crrp7o1eakh053g2.png)
+
+
 ### Create Launch Template
 
 WE NEED TO HAVE A KEY PAIR SET.
@@ -145,6 +240,22 @@ aws ec2 create-launch-template \
 }"
 ```
 
+```sh
+aws ec2 create-launch-template \
+--launch-template-name cruddur-lt-arm \
+--version-description "Launch Template for Cruddur ECS EC2 ARM64 Cluster" \
+--launch-template-data "{
+    \"ImageId\": \"$ECS_OPTIMIZED_AMI_ARM\",
+    \"InstanceType\": \"t4g.micro\",
+    \"SecurityGroupIds\": [\"$CRUD_CLUSTER_SG\"],
+    \"IamInstanceProfile\": {
+        \"Arn\": \"$ECS_INSTANCE_PROFILE_ARN\"
+    },
+    \"UserData\": \"$(printf '#!/bin/bash\necho "ECS_CLUSTER=cruddur" >> /etc/ecs/ecs.config' | base64 -w 0)\"
+}"
+```
+
+![both launch types](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7g40layhja50i8q7fuyt.png)
 ## Create ASG
 
 We need an Auto Scaling Group so that if we need to add more EC2 instance we have the capacity to run them.
@@ -175,6 +286,25 @@ aws autoscaling create-auto-scaling-group \
 --vpc-zone-identifier $DEFAULT_SUBNET_IDS
 ```
 
+```sh
+aws autoscaling create-auto-scaling-group \
+--auto-scaling-group-name cruddur-asg-arm \
+--launch-template "LaunchTemplateName=cruddur-lt-arm,Version=\$Latest" \
+--min-size 1 \
+--max-size 1 \
+--desired-capacity 1 \
+--vpc-zone-identifier $DEFAULT_SUBNET_IDS
+```
+
+![cruddur asg](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/x8zbnhjayjrfy724n7we.png)
+
+
+
+
+![both asg](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mfx2ktnsxzhm1i3pxi4w.png)
+
+![asg instances both types](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cqcrydffo1kjp0jwk9px.png)
+
 ## Debugging association of EC2 Instance with Cluster (optional)
 
 If we don't see out EC2 instance associated with our cluster.
@@ -189,7 +319,7 @@ systemctl status ecs
 
 Consider that we have access to docker and we can see any running containers or shell into them eg:
 
-```
+```sh
 docker ps
 docker exec -it <container name> /bin/bash
 ```
@@ -202,6 +332,9 @@ docker exec -it <container name> /bin/bash
 aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
 ```
 
+![ecr login](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mk8wwswxnhjjh5bu9lto.png)
+
+
 ### For Base-image python
 
 ```sh
@@ -210,13 +343,15 @@ aws ecr create-repository \
   --image-tag-mutability MUTABLE
 ```
 
+![ecr repo 1](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/zgwj1ixt8euh6h7pkzk4.png)
+
 #### Set URL
 
 ```sh
 export ECR_PYTHON_URL="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cruddur-python"
 echo $ECR_PYTHON_URL
 ```
-
+![ecr repo 2](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rrora6zutt4upgc9d462.png)
 #### Pull Image
 
 ```sh
@@ -293,7 +428,7 @@ echo $ECR_FRONTEND_REACT_URL
 
 ```sh
 docker build \
---build-arg REACT_APP_BACKEND_URL="https://4567-$GITPOD_WORKSPACE_ID.$GITPOD_WORKSPACE_CLUSTER_HOST" \
+--build-arg REACT_APP_BACKEND_URL="http://${AWS_ELB}:4567" \
 --build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
 --build-arg REACT_APP_AWS_COGNITO_REGION="$AWS_DEFAULT_REGION" \
 --build-arg REACT_APP_AWS_USER_POOLS_ID="$AWS_USER_POOLS_ID" \
@@ -532,7 +667,9 @@ aws ecs register-task-definition --cli-input-json file://aws/task-definitions/ba
 ```sh
 aws ecs register-task-definition --cli-input-json file://aws/task-definitions/frontend-react-js.json
 ```
+![task def](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/2lof8um6k0t9r95u48ky.png)
 
+![tasks](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/a3rp1czx0qepcgvas9is.png)
 ### Create Security Group
 
 
@@ -586,12 +723,59 @@ aws ecs create-service --cli-input-json file://aws/json/service-backend-flask.js
 aws ecs create-service --cli-input-json file://aws/json/service-frontend-react-js.json
 ```
 
+
+![services](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/og1m1b28nllrnb9aiqjc.png)
+![services 1](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/w53wxoc4tkr97lpxq7hw.png)
+
+
 > Auto Assign is not supported by EC2 launch type for services
 
 This is for when we are uing a NetworkMode of awsvpc
 > --network-configuration "awsvpcConfiguration={subnets=[$DEFAULT_SUBNET_IDS],securityGroups=[$SERVICE_CRUD_SG],assignPublicIp=ENABLED}"
 
 https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html
+
+
+### Elastic load balancer from console
+
+
+![elb listioners](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3t0gsxd9xcbdsfz7dp2g.png)
+![elb access logs](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/eglh0t1ft6usjc67r64m.png)
+![target groups](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kpmm6ctz2lc2ige5tlsg.png)
+
+### Access logs for ELB
+
+Create a bucket and configure policy like this with principal `arn:aws:iam::718504428378:root` for ap-south-1 elb
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Allow-ELB-to-write-logs",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::718504428378:root"
+            },
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::access-logs-4-cruddur-alb/AWSLogs/99999999999/*"
+        }
+    ]
+}
+```
+
+![s3 log 1](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/d17obnm0hwqiddt9pu0b.png)
+![s3 log 2](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g4nleuzjjdijgvgwl46u.png)
+
+
+
+
+![docker build with args frontend](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kw7lsbkxbrjnw3hwli2e.png)
+![sample authorise ingress for service](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/fif8tue55mfq0yxk5tg3.png)
+![authorise db sg 5432](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/peq9ajb054hml5if55jr.png)
+![sample access log](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4mmjhsdrh9dci9iapebb.png)
+
+
 
 ### Test Service
 
@@ -625,7 +809,6 @@ docker run --rm -it curlimages/curl --get -H "Accept: application/json" -H "Cont
 ```
 
 
-
 ## Not able to use Sessions Manager to get into cluster EC2 sintance
 
 The instance can hang up for various reasons.
@@ -641,3 +824,11 @@ The CLI will do a forceful shutdown after a period of time if graceful shutdown 
 ```sh
 aws ec2 reboot-instances --instance-ids i-0d15aef0618733b6d
 ```
+
+
+## Route 53
+
+
+![route 53](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0738dw9adgvowue0a7a7.png)
+
+

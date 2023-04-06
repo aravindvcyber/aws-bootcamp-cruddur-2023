@@ -13,16 +13,6 @@
       "name": "xray",
       "image": "public.ecr.aws/xray/aws-xray-daemon" ,
       "essential": true,
-      "healthCheck": {
-        "command": [
-          "CMD-SHELL",
-          "netstat -aun | grep 2000 > /dev/null; if [ 0 != $? ]; then exit 1; fi;"
-        ],
-        "interval": 30,
-        "timeout": 5,
-        "retries": 3,
-        "startPeriod": 60
-      },
       "user": "1337",
       "portMappings": [
         {
@@ -43,8 +33,8 @@
         ],
         "interval": 30,
         "timeout": 15,
-        "retries": 3,
-        "startPeriod": 60
+        "retries": 2,
+        "startPeriod": 30
       },
       "portMappings": [
         {
@@ -57,7 +47,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-            "awslogs-group": "cruddur",
+            "awslogs-group": "/cruddur/cluster",
             "awslogs-region": "ap-south-1",
             "awslogs-stream-prefix": "backend-flask"
         }
@@ -65,10 +55,12 @@
       "environment": [
         {"name": "OTEL_SERVICE_NAME", "value": "backend-flask"},
         {"name": "OTEL_EXPORTER_OTLP_ENDPOINT", "value": "https://api.honeycomb.io"},
-        {"name": "AWS_COGNITO_USER_POOL_ID", "value": "ap-south-1_CQ4wDfnwc"},
-        {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "5b6ro31g97urk767adrbrdj1g5"},
-        {"name": "FRONTEND_URL", "value": "*"},
-        {"name": "BACKEND_URL", "value": "*"},
+        {"name": "AWS_COGNITO_USER_POOL_ID", "value": "ap-south-1_icQImvJoq"},
+        {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "6rrcnt129rrt9849mdm0l6743v"},
+        {"name": "FRONTEND_URL", "value": "https://cruddur.sandbox.exploringserverless.com"},
+        {"name": "BACKEND_URL", "value": "https://cruddur.sandbox.exploringserverless.com"},
+        {"name": "BACKEND_URL_GITPOD", "value": "https://4567-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us93.gitpod.io"},
+        {"name": "FRONTEND_URL_GITPOD", "value": "https://3000-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us93.gitpod.io"},
         {"name": "AWS_DEFAULT_REGION", "value": "ap-south-1"}
       ],
       "secrets": [
