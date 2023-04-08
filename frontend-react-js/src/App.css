@@ -5,6 +5,6 @@ main, article {
 
 .content {
   width: 600px;
-  height: 100%;
+  height: fit-content;
   background: var(--fg);;
 }

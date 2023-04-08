@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
 from aws_xray_sdk.core import xray_recorder
+from lib.db import db
 from opentelemetry import trace
 tracer = trace.get_tracer("user.activities")
 class UserActivities:
@@ -18,7 +19,13 @@ class UserActivities:
         model['errors'] = ['blank_user_handle']
         span.set_attribute("app.result_errors", model['errors'])
       else:
+        sql = db.template('users','activities')
+        user_activites = db.query_array_json(sql,{
+        'handle': user_handle
+        })
+
         now = datetime.now()
+        
         results = [{
           'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
           'handle':  'Andrew Brown',
@@ -27,6 +34,10 @@ class UserActivities:
           'expires_at': (now + timedelta(days=31)).isoformat()
         }]
         model['data'] = results
+        # print(user_activites)
+        if(len(user_activites) > 0):
+          model['data'] = user_activites
+        
         span.set_attribute("app.result_length", len(model['data']))
         try:
           subsegment = xray_recorder.begin_subsegment('mock-data')
