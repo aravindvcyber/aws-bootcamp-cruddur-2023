@@ -16,7 +16,8 @@
 				"vscodevim.vim",
 				"mhutchie.git-graph",
 				"eamodio.gitlens",
-				"DavidAnson.vscode-markdownlint"
+				"DavidAnson.vscode-markdownlint",
+				"ms-vscode.remote-server"
 			],
 			"settings": {
 				"terminal.integrated.fontSize": 25,
