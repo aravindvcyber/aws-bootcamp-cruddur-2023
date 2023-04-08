@@ -5,6 +5,23 @@
 
 This is the starting codebase that will be used in the FREE AWS Cloud Project Bootcamp 2023
 
+[![CodeQL](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/github-code-scanning/codeql)
+
+[![Node.js CI](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node.js.yml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node.js.yml)
+
+[![Python application](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/python-app.yml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/python-app.yml)
+
+### My Site:
+
+https://cruddur.sandbox.exploringserverless.com/
+
+Here is the site: Do checkout, let me know some comments
+
+
+![domain with ssl](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dwndcc6751daf961egqk.png)
+
+![domain with ssl 2](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c2wzr3wubql9zjx4siyc.png)
+
 ![Cruddur Graphic](_docs/assets/cruddur-banner.jpg)
 
 ![Cruddur Screenshot](_docs/assets/cruddur-screenshot.png)
