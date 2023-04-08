@@ -34,3 +34,15 @@ rm session-manager-plugin.deb
 
 ./bin/ecr/login
 
+./bin/backend/generate-env
+
+./bin/backend/generate-env-local
+
+
+./bin/frontend/generate-env
+
+./bin/frontend/generate-env-local
+
+
+
+
