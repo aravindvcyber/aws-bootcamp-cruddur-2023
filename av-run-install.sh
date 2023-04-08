@@ -31,6 +31,8 @@ curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64
 sudo dpkg -i session-manager-plugin.deb
 rm session-manager-plugin.deb
 
+npm instal -g aws-cdk
+npm install -g npm@9.6.4
 
 ./bin/ecr/login
 
@@ -38,10 +40,14 @@ rm session-manager-plugin.deb
 
 ./bin/backend/generate-env-local
 
+./bin/backend/generate-env-local-cs
+
 
 ./bin/frontend/generate-env
 
 ./bin/frontend/generate-env-local
+
+./bin/frontend/generate-env-local-cs
 
 
 
