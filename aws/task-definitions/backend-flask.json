@@ -58,7 +58,7 @@
         {"name": "AWS_COGNITO_USER_POOL_ID", "value": "ap-south-1_icQImvJoq"},
         {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "6rrcnt129rrt9849mdm0l6743v"},
         {"name": "FRONTEND_URL", "value": "https://cruddur.sandbox.exploringserverless.com"},
-        {"name": "BACKEND_URL", "value": "https://cruddur.sandbox.exploringserverless.com"},
+        {"name": "BACKEND_URL", "value": "https://api.cruddur.sandbox.exploringserverless.com"},
         {"name": "BACKEND_URL_GITPOD", "value": "https://4567-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us93.gitpod.io"},
         {"name": "FRONTEND_URL_GITPOD", "value": "https://3000-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us93.gitpod.io"},
         {"name": "AWS_DEFAULT_REGION", "value": "ap-south-1"}

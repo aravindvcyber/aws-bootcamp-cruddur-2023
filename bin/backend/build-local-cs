@@ -1,0 +1,38 @@
+#! /usr/bin/bash
+
+ABS_PATH=$(readlink -f "$0")
+# BUILD_PATH=$(dirname $ABS_PATH)
+# DOCKER_PATH=$(dirname $BUILD_PATH)
+# BIN_PATH=$(dirname $DOCKER_PATH)
+BACKEND_PATH=$(dirname $ABS_PATH)
+BIN_PATH=$(dirname $BACKEND_PATH)
+PROJECT_PATH=$(dirname $BIN_PATH)
+BACKEND_FLASK_PATH="$PROJECT_PATH/backend-flask"
+
+docker rmi backend-flask
+
+docker build \
+-f "$BACKEND_FLASK_PATH/Dockerfile" \
+-t backend-flask \
+"$BACKEND_FLASK_PATH/."
+
+# docker build \
+# --build-arg ENVIRONMENT="DEV" \
+# --build-arg CONNECTION_URL="${PROD_CONNECTION_URL}" \
+# --build-arg FRONTEND_URL="https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" \
+# --build-arg BACKEND_URL="https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" \
+# --build-arg POD_HOST_URL="https://${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" \
+# --build-arg OTEL_SERVICE_NAME='crudder-backend-flask' \
+# --build-arg OTEL_EXPORTER_OTLP_ENDPOINT="https://api.honeycomb.io" \
+# --build-arg OTEL_EXPORTER_OTLP_HEADERS="x-honeycomb-team=${HONEYCOMB_API_KEY}" \
+# --build-arg AWS_XRAY_URL="${AWS_ELB}" \
+# --build-arg AWS_XRAY_DAEMON_ADDRESS="xray-daemon:2000" \
+# --build-arg AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION}" \
+# --build-arg AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+# --build-arg AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}". \
+# --build-arg ROLLBAR_ACCESS_TOKEN="${ROLLBAR_ACCESS_TOKEN}" \
+# --build-arg AWS_COGNITO_USER_POOL_ID="${AWS_COGNITO_USER_POOL_ID}" \
+# --build-arg AWS_COGNITO_USER_POOL_CLIENT_ID="${AWS_COGNITO_USER_POOL_CLIENT_ID}" \
+# -f "$BACKEND_FLASK_PATH/Dockerfile" \
+# -t backend-flask \
+# "$BACKEND_FLASK_PATH/."

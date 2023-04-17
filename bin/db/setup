@@ -27,3 +27,4 @@ source "$DB_PATH/seed"
 
 
 python "$DB_PATH/update_cognito_user_ids"
+python "$DB_PATH/migrate"
