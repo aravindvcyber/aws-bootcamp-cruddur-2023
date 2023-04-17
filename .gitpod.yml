@@ -13,17 +13,22 @@ tasks:
       unzip awscliv2.zip
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
+      bash bin/ecr/login
     command: aws --version
   - name: flask
     command: |
+      ruby $THEIA_WORKSPACE_ROOT/bin/backend/generate-env
+      ruby $THEIA_WORKSPACE_ROOT/bin/backend/generate-env-local
       cd backend-flask
       pip install -r requirements.txt
-  - name: momento
-    before: |
-      brew tap momentohq/tap
-      brew install momento-cli
+  # - name: momento
+  #   before: |
+  #     brew tap momentohq/tap
+  #     brew install momento-cli
   - name: react-js
     command: |
+      ruby $THEIA_WORKSPACE_ROOT/bin/frontend/generate-env
+      ruby $THEIA_WORKSPACE_ROOT/bin/frontend/generate-env-local
       cd frontend-react-js
       npm i
   - name: postgres
@@ -41,6 +46,11 @@ tasks:
       curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
       sudo dpkg -i session-manager-plugin.deb
       cd backend-flask
+  - name: cdk
+    before: |
+      npm install aws-cdk -g
+      cd thumbing-serverless-cdk
+      npm i
 
 ports:
   - name: frontend
@@ -59,7 +69,7 @@ vscode:
   extensions:
     - 42Crunch.vscode-openapi
     - cweijan.vscode-postgresql-client2
-    - ms-python.python
+    - ms-python.python  
     - eamodio.gitlens
     - mhutchie.git-graph
     - ms-azuretools.vscode-docker

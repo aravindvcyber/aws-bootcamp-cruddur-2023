@@ -8,3 +8,9 @@ frontend-react-js/build/*
 *.env
 frontend-react-js/.env-local
 frontend-react-js/.env-prod
+aws/lambda/process-images/node_modules/*
+
+tmp/**/*
+aws/lambdas/lambda-authorizer/node_modules/*
+aws/lambdas/cruddur-upload-avatar/lambda_function.zip
+aws/lambdas/cruddur-upload-avatar/vendor/*

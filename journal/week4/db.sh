@@ -39,6 +39,7 @@ psql cruddur < db/schema.sql -h localhost -U postgres
 
 
 GITPOD_IP=$(curl ifconfig.me)
+CODESPACE_IP=$(curl ifconfig.me)
 
 export DB_SG_ID="sg-02d094a5bdec82a18"
 gp env DB_SG_ID="sg-02d094a5bdec82a18"

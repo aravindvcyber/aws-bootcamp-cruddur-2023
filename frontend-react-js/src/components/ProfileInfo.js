@@ -1,5 +1,6 @@
 import './ProfileInfo.css';
 import {ReactComponent as ElipsesIcon} from './svg/elipses.svg';
+import ProfileAvatar from 'components/ProfileAvatar'
 import React from "react";
 
 //[TODO] Authenication
@@ -7,7 +8,9 @@ import React from "react";
 import { Auth } from 'aws-amplify';
 
 export default function ProfileInfo(props) {
+
   const [popped, setPopped] = React.useState(false);
+  const [userId, setUserId] = React.useState(props.user.cognito_user_uuid);
 
   const click_pop = (event) => {
     setPopped(!popped)
@@ -49,7 +52,7 @@ export default function ProfileInfo(props) {
         <button onClick={signOut}>Sign Out</button> 
       </div>
       <div className="profile-info" onClick={click_pop}>
-        <div className="profile-avatar"></div>
+      <ProfileAvatar id={userId} />
         <div className="profile-desc">
           <div className="profile-display-name">{props.user.display_name || "My Name" }</div>
           <div className="profile-username">@{props.user.handle || "handle"}</div>
