@@ -42,11 +42,13 @@
            }
          },
          "environment": [
-          {"name": "REACT_APP_BACKEND_URL", "value": "https://cruddur.sandbox.exploringserverless.com"},
+          {"name": "REACT_APP_BACKEND_URL", "value": "https://api.cruddur.sandbox.exploringserverless.com"},
+          {"name": "REACT_APP_FRONTEND_URL", "value": "https://cruddur.sandbox.exploringserverless.com"},
           {"name": "REACT_APP_AWS_PROJECT_REGION", "value": "ap-south-1"},
           {"name": "REACT_APP_AWS_COGNITO_REGION", "value": "ap-south-1"},
           {"name": "REACT_APP_AWS_COGNITO_USER_POOL_ID", "value": "ap-south-1_icQImvJoq"},
-          {"name": "REACT_APP_AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "6rrcnt129rrt9849mdm0l6743v"}
+          {"name": "REACT_APP_AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "6rrcnt129rrt9849mdm0l6743v"},
+          {"name": "REACT_APP_API_GATEWAY_ENDPOINT_URL", "value": "https://func.cruddur.sandbox.exploringserverless.com"}
         ],
         "secrets": [
         ]

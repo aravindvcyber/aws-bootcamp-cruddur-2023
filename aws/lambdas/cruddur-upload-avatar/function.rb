@@ -1,5 +1,5 @@
-my_gem_path = Dir["./vendor/bundle/ruby/3.1.0/gems/**/lib"]
-$LOAD_PATH.unshift(*my_gem_path)
+# my_gem_path = Dir["./vendor/bundle/ruby/3.1.0/gems/**/lib"]
+# $LOAD_PATH.unshift(*my_gem_path)
 
 
 require 'aws-sdk-s3'
@@ -14,13 +14,13 @@ def handler(event:, context:)
     { 
       headers: {
         "Access-Control-Allow-Headers": "*, Authorization",
-        "Access-Control-Allow-Origin": "https://3000-omenking-awsbootcampcru-2n1d6e0bd1f.ws-us94.gitpod.io",
+        "Access-Control-Allow-Origin": ENV["ALLOW_ORIGINS"],
         "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
       },
       statusCode: 200
     }
   else
-    token = event['headers']['authorization']
+    token = event['headers']['authorization'].split(' ')[1]
     puts({step: 'presignedurl', access_token: token}.to_json)
 
     body_hash = JSON.parse(event["body"])
@@ -42,7 +42,7 @@ def handler(event:, context:)
     { 
       headers: {
         "Access-Control-Allow-Headers": "*, Authorization",
-        "Access-Control-Allow-Origin": "https://3000-omenking-awsbootcampcru-2n1d6e0bd1f.ws-us94.gitpod.io",
+        "Access-Control-Allow-Origin": ENV["ALLOW_ORIGINS"],
         "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
       },
       statusCode: 200, 

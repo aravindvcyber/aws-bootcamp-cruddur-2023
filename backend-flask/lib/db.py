@@ -72,6 +72,9 @@ class Db:
       with self.pool.connection() as conn:
         with conn.cursor() as cur:
           cur.execute(sql,params)
+          print(sql)
+          print(params)
+          print(is_returning_id)
           if is_returning_id:
             returning_id = cur.fetchone()[0]
           conn.commit() 

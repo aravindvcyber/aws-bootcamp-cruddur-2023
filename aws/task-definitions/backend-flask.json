@@ -61,6 +61,8 @@
         {"name": "BACKEND_URL", "value": "https://api.cruddur.sandbox.exploringserverless.com"},
         {"name": "BACKEND_URL_GITPOD", "value": "https://4567-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us93.gitpod.io"},
         {"name": "FRONTEND_URL_GITPOD", "value": "https://3000-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us93.gitpod.io"},
+        {"name": "BACKEND_URL_CODESPACE", "value": "https://aravindvcyber-stunning-space-potato-96jqj7vj5qcp694-4567.preview.app.github.dev"},
+        {"name": "FRONTEND_URL_CODESPACE", "value": "https://aravindvcyber-stunning-space-potato-96jqj7vj5qcp694-3000.preview.app.github.dev"},
         {"name": "AWS_DEFAULT_REGION", "value": "ap-south-1"}
       ],
       "secrets": [
