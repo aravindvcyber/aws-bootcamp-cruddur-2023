@@ -6,8 +6,16 @@ cd $THEIA_WORKSPACE_ROOT/aws/lambdas/lambda-authorizer/
 npm install
 
 cd $THEIA_WORKSPACE_ROOT/aws/lambdas/cruddur-upload-avatar/
-bundle install --path vendor/bundle
-zip -r lambda_function.zip function.rb .bundle/ vendor/
+# rm lambda_function.zip
+# rm -rf vendor/bundle
+# bundle install --path vendor/bundle
+# bundle update
+# zip -r lambda_function.zip function.rb .bundle/ vendor/
+
+rm lambda_function_slim.zip
+bundle install
+bundle update
+zip -r lambda_function_slim.zip function.rb Gemfile Gemfile.lock
 
 
 cd $THEIA_WORKSPACE_ROOT/backend-flask

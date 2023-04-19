@@ -19,7 +19,8 @@
 				"eamodio.gitlens",
 				"DavidAnson.vscode-markdownlint",
 				"ms-vscode.remote-server",
-				"rangav.vscode-thunder-client"
+				"rangav.vscode-thunder-client",
+				"42Crunch.vscode-openapi"
 			],
 			"settings": {
 				"terminal.integrated.fontSize": 25,

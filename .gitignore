@@ -14,3 +14,4 @@ tmp/**/*
 aws/lambdas/lambda-authorizer/node_modules/*
 aws/lambdas/cruddur-upload-avatar/lambda_function.zip
 aws/lambdas/cruddur-upload-avatar/vendor/*
+aws/lambdas/cruddur-upload-avatar/lambda_function*
