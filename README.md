@@ -12,9 +12,9 @@ This is the starting codebase that will be used in the FREE AWS Cloud Project Bo
 [![Python application](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/python-app.yml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/python-app.yml)
 
 
-[![Cruddur Frontend CodeBuild Status](https://codebuild.ap-south-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiRDlRRXorTjl6anpBZmpEYkJPSERCdSt1OEE2QUFyY253UXpSR20yTkhIM3FmZ1hodVNKYVNmNjRJMmVabFI5dHhEZGcrNXlMMmNPNFVTMk5TOC9XelBVPSIsIml2UGFyYW1ldGVyU3BlYyI6InVNMXZOTld4NFF4bys4UlciLCJtYXRlcmlhbFNldFNlcmlhbCI6Mn0%3D&branch=main)
+![Cruddur Frontend CodeBuild Status](https://codebuild.ap-south-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiRDlRRXorTjl6anpBZmpEYkJPSERCdSt1OEE2QUFyY253UXpSR20yTkhIM3FmZ1hodVNKYVNmNjRJMmVabFI5dHhEZGcrNXlMMmNPNFVTMk5TOC9XelBVPSIsIml2UGFyYW1ldGVyU3BlYyI6InVNMXZOTld4NFF4bys4UlciLCJtYXRlcmlhbFNldFNlcmlhbCI6Mn0%3D&branch=main)
 
-[![Cruddur Backend CodeBuild Status](https://codebuild.ap-south-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNXcrRDZ3akxYTFo3c2pjdHQ2NVFSWGNoSFB2REJFcXBlV1pPSEsyRE9xSXZWYVVXY3ZRdS9TVWZFS0lVWnQ1eEVMQjNSeW9nbFluRCt5aEI4N3JQWlU0PSIsIml2UGFyYW1ldGVyU3BlYyI6IlpLODdnSWJLMkZpUWtqdnAiLCJtYXRlcmlhbFNldFNlcmlhbCI6Mn0%3D&branch=main)
+![Cruddur Backend CodeBuild Status](https://codebuild.ap-south-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNXcrRDZ3akxYTFo3c2pjdHQ2NVFSWGNoSFB2REJFcXBlV1pPSEsyRE9xSXZWYVVXY3ZRdS9TVWZFS0lVWnQ1eEVMQjNSeW9nbFluRCt5aEI4N3JQWlU0PSIsIml2UGFyYW1ldGVyU3BlYyI6IlpLODdnSWJLMkZpUWtqdnAiLCJtYXRlcmlhbFNldFNlcmlhbCI6Mn0%3D&branch=main)
 
 ### My Site:
 
