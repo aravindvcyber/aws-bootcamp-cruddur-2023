@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+from lib.db import db
 from aws_xray_sdk.core import xray_recorder
 from lib.db import db
 from opentelemetry import trace
@@ -10,33 +11,45 @@ class UserActivities:
       now = datetime.now(timezone.utc).astimezone()
       span.set_attribute("app.now", now.isoformat())
       segment = xray_recorder.begin_segment('user_activities')
+      # model = {
+      #   'errors': None,
+      #   'data': None
+      # }
+      # now = datetime.now(timezone.utc).astimezone()
+      # if user_handle == None or len(user_handle) < 1:
+      #   model['errors'] = ['blank_user_handle']
+      #   span.set_attribute("app.result_errors", model['errors'])
+      # else:
+      #   sql = db.template('users','activities')
+      #   user_activites = db.query_array_json(sql,{
+      #   'handle': user_handle
+      #   })
+
+      #   now = datetime.now()
+        
+      #   results = [{
+      #     'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
+      #     'handle':  'Andrew Brown',
+      #     'message': 'Cloud is fun!',
+      #     'created_at': (now - timedelta(days=1)).isoformat(),
+      #     'expires_at': (now + timedelta(days=31)).isoformat()
+      #   }]
+      #   model['data'] = results
       model = {
-        'errors': None,
-        'data': None
+      'errors': None,
+      'data': None
       }
-      now = datetime.now(timezone.utc).astimezone()
       if user_handle == None or len(user_handle) < 1:
         model['errors'] = ['blank_user_handle']
-        span.set_attribute("app.result_errors", model['errors'])
       else:
-        sql = db.template('users','activities')
-        user_activites = db.query_array_json(sql,{
-        'handle': user_handle
-        })
-
-        now = datetime.now()
-        
-        results = [{
-          'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
-          'handle':  'Andrew Brown',
-          'message': 'Cloud is fun!',
-          'created_at': (now - timedelta(days=1)).isoformat(),
-          'expires_at': (now + timedelta(days=31)).isoformat()
-        }]
+        print("else:")
+        sql = db.template('users','show')
+        results = db.query_object_json(sql,{'handle': user_handle})
         model['data'] = results
-        # print(user_activites)
-        if(len(user_activites) > 0):
-          model['data'] = user_activites
+        
+        # # print(user_activites)
+        # if(len(user_activites) > 0):
+        #   model['data'] = user_activites
         
         span.set_attribute("app.result_length", len(model['data']))
         try:

@@ -57,7 +57,7 @@ jobs:
       with:
         rdme: openapi --version=v1.0 --key=${{ secrets.README_API_KEY }} --id=${{ secrets.README_ID }}
     - name: Notify deploy to Rollbar
-      uses: rollbar/github-deploy-action@2.1.1
+      uses: rollbar/github-deploy-action@2.1.2
       id: rollbar_deploy
       with:
         environment: 'main'

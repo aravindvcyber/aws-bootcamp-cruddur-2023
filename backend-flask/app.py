@@ -16,6 +16,7 @@ from services.message_groups import *
 from services.messages import *
 from services.create_message import *
 from services.show_activity import *
+from services.update_profile import *
 
 from lib.cognito_jwt_token import CognitoJwtToken, extract_access_token, TokenVerifyError
 # HoneyComb ---------
@@ -94,8 +95,13 @@ frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
 backendGitpod = os.getenv('BACKEND_URL_GITPOD')
 frontendGitpod = os.getenv('FRONTEND_URL_GITPOD')
+backendCodespace = os.getenv('BACKEND_URL_CODESPACE')
+frontendCodespace = os.getenv('FRONTEND_URL_CODESPACE')
+localhost = "http://localhost:3000"
+localhost2 = "http://127.0.0.1:3000"
 pod = os.getenv('POD_HOST_URL')
-origins = [frontend, backend, pod, backendGitpod, frontendGitpod]
+origins = [frontend, backend, pod, backendGitpod, frontendGitpod, backendCodespace, frontendCodespace, localhost,localhost2]
+print(origins)
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
@@ -183,7 +189,7 @@ def rollbar_test():
 def health_check():
   # hello = None
   # hello()
-  return {'success': True}, 200
+  return {'success': True, 'ver': 1}, 200
 
 @xray_recorder.capture('message_groups')
 @app.route("/api/message_groups", methods=['GET'])
@@ -383,6 +389,29 @@ def data_activities_reply(activity_uuid):
 def data_users_short(handle):
   data = UsersShort.run(handle)
   return data, 200
+
+@app.route("/api/profile/update", methods=['POST','OPTIONS'])
+@cross_origin()
+def data_update_profile():
+  bio          = request.json.get('bio',None)
+  display_name = request.json.get('display_name',None)
+  access_token = extract_access_token(request.headers)
+  try:
+    claims = cognito_jwt_token.verify(access_token)
+    cognito_user_id = claims['sub']
+    model = UpdateProfile.run(
+      cognito_user_id=cognito_user_id,
+      bio=bio,
+      display_name=display_name
+    )
+    if model['errors'] is not None:
+      return model['errors'], 422
+    else:
+      return model['data'], 200
+  except TokenVerifyError as e:
+    # unauthenicatied request
+    app.logger.debug(e)
+    return {}, 401
 
 if __name__ == "__main__":
   app.run(debug=True)

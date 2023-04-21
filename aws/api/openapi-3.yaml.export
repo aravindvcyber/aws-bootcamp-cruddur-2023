@@ -1,0 +1,55 @@
+openapi: "3.0.1"
+info:
+  title: "func.cruddur.sandbox.exploringserverless.com"
+  version: "2023-04-19 15:22:13UTC"
+servers:
+- url: "https://nnzmbqf2b9.execute-api.ap-south-1.amazonaws.com/{basePath}"
+  variables:
+    basePath:
+      default: ""
+paths:
+  /{proxy+}:
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /{proxy+}"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:197942459570:function:CruddurAvatarUpload/invocations"
+        connectionType: "INTERNET"
+    parameters:
+    - name: "proxy+"
+      in: "path"
+      description: "Generated path parameter for proxy+"
+      required: true
+      schema:
+        type: "string"
+  /avatars/key_upload:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /avatars/key_upload"
+      security:
+      - CruddurJWTAuthorizer: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:197942459570:function:CruddurAvatarUpload/invocations"
+        connectionType: "INTERNET"
+components:
+  securitySchemes:
+    CruddurJWTAuthorizer:
+      type: "apiKey"
+      name: "Authorization"
+      in: "header"
+      x-amazon-apigateway-authorizer:
+        identitySource: "$request.header.Authorization"
+        authorizerUri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:197942459570:function:CruddurApiGatewayLambdaAuthorizer/invocations"
+        authorizerPayloadFormatVersion: "2.0"
+        authorizerResultTtlInSeconds: 300
+        type: "request"
+        enableSimpleResponses: true
+x-amazon-apigateway-importexport-version: "1.0"

@@ -6,7 +6,8 @@
 		"ghcr.io/devcontainers/features/aws-cli:1": {}
 	},
 	"remoteEnv": {
-		"AWS_CLI_AUTO_PROMPT": "on-partial"
+		"AWS_CLI_AUTO_PROMPT": "on-partial",
+		"CODESPACE_IP": ""
 	},	
 	"customizations": {
 		"vscode": {
@@ -17,7 +18,9 @@
 				"mhutchie.git-graph",
 				"eamodio.gitlens",
 				"DavidAnson.vscode-markdownlint",
-				"ms-vscode.remote-server"
+				"ms-vscode.remote-server",
+				"rangav.vscode-thunder-client",
+				"42Crunch.vscode-openapi"
 			],
 			"settings": {
 				"terminal.integrated.fontSize": 25,
