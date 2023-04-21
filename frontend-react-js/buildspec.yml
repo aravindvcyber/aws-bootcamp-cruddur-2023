@@ -6,6 +6,7 @@ phases:
       docker: 20
     commands:
       - echo "cd into $CODEBUILD_SRC_DIR/frontend"
+      - ./bin/frontend/generate-env
       - cd $CODEBUILD_SRC_DIR/frontend-react-js
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $IMAGE_URL
   build:
