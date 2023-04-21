@@ -189,7 +189,7 @@ def rollbar_test():
 def health_check():
   # hello = None
   # hello()
-  return {'success': True}, 200
+  return {'success': True, 'ver': 1}, 200
 
 @xray_recorder.capture('message_groups')
 @app.route("/api/message_groups", methods=['GET'])
