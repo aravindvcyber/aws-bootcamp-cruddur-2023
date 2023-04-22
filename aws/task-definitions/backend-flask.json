@@ -31,9 +31,9 @@
           "CMD-SHELL",
           "python /backend-flask/bin/health-check"
         ],
-        "interval": 30,
-        "timeout": 15,
-        "retries": 2,
+        "interval": 5,
+        "timeout": 3,
+        "retries": 3,
         "startPeriod": 30
       },
       "portMappings": [
