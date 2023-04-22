@@ -10,13 +10,13 @@
   ],
   "containerDefinitions": [
     {
-      "name": "xray",
+      "name": "xray-daemon",
       "image": "public.ecr.aws/xray/aws-xray-daemon" ,
       "essential": true,
       "user": "1337",
       "portMappings": [
         {
-          "name": "xray",
+          "name": "xray-daemon",
           "containerPort": 2000,
           "protocol": "udp"
         }
@@ -56,7 +56,7 @@
         {"name": "OTEL_SERVICE_NAME", "value": "backend-flask"},
         {"name": "ENVIRONMENT", "value": "PROD"},
         {"name": "AWS_XRAY_URL", "value": "*cruddur.sandbox.exploringserverless.com*"},
-        {"name": "AWS_XRAY_DAEMON_ADDRESS", "value": "xray:2000"},
+        {"name": "AWS_XRAY_DAEMON_ADDRESS", "value": "localhost:2000"},
         {"name": "OTEL_EXPORTER_OTLP_ENDPOINT", "value": "https://api.honeycomb.io"},
         {"name": "AWS_COGNITO_USER_POOL_ID", "value": "ap-south-1_icQImvJoq"},
         {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "6rrcnt129rrt9849mdm0l6743v"},
@@ -67,7 +67,8 @@
         {"name": "FRONTEND_URL_GITPOD", "value": "https://3000-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us93.gitpod.io"},
         {"name": "BACKEND_URL_CODESPACE", "value": "https://aravindvcyber-stunning-space-potato-96jqj7vj5qcp694-4567.preview.app.github.dev"},
         {"name": "FRONTEND_URL_CODESPACE", "value": "https://aravindvcyber-stunning-space-potato-96jqj7vj5qcp694-3000.preview.app.github.dev"},
-        {"name": "AWS_DEFAULT_REGION", "value": "ap-south-1"}
+        {"name": "AWS_DEFAULT_REGION", "value": "ap-south-1"},
+        {"name": "AWS_REGION", "value": "ap-south-1"}
       ],
       "secrets": [
         {"name": "AWS_ACCESS_KEY_ID"    , "valueFrom": "arn:aws:ssm:ap-south-1:197942459570:parameter/cruddur/backend-flask/AWS_ACCESS_KEY_ID"},
