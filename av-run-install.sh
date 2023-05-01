@@ -2,6 +2,11 @@ cd $THEIA_WORKSPACE_ROOT/frontend-react-js
 npm install
 cd ..
 
+cd $THEIA_WORKSPACE_ROOT
+pip install cfn-lint
+cargo install cfn-guard
+gem install cfn-toml
+
 cd $THEIA_WORKSPACE_ROOT/aws/lambdas/lambda-authorizer/
 npm install
 
