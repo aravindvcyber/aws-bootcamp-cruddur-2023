@@ -80,11 +80,9 @@ Resources:
           !Sub ${NetworkingStack}VpcId
       SecurityGroupIngress:
         - IpProtocol: tcp
-          SourceSecurityGroupId:
-            Fn::ImportValue:
-              !Sub ${ClusterStack}ALBSecurityGroupId
-          FromPort: 80
-          ToPort: 80
+          SourceSecurityGroupId: !GetAtt ALBSG.GroupId
+          FromPort: !Ref BackendPort
+          ToPort: !Ref BackendPort
           Description: ALB HTTP
   FargateService:
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-service.html
@@ -98,12 +96,14 @@ Resources:
       DesiredCount: 1
       EnableECSManagedTags: true
       EnableExecuteCommand: true
-      HealthCheckGracePeriodSeconds: 0
+      HealthCheckGracePeriodSeconds: 100
       LaunchType: FARGATE
       LoadBalancers:
-      # TODO - UPDATE THIS
         - TargetGroupArn: 'arn:aws:elasticloadbalancing:ap-south-1:197942459570:targetgroup/cruddur-backend-flask-tg/87ed2a3daf2d2b1d'
-          ContainerName: 'backend-flask'
+        - TargetGroupArn:
+            Fn::ImportValue:
+              !Sub "${ClusterStack}BackendTGArn"
+          ContainerName: !Ref ContainerName
           ContainerPort: !Ref ContainerPort
       NetworkConfiguration:
         AwsvpcConfiguration:
@@ -117,11 +117,21 @@ Resources:
                   !Sub "${NetworkingStack}PublicSubnetIds"
       PlatformVersion: LATEST
       PropagateTags: SERVICE
-      ServiceRegistries:
-        - RegistryArn: !Sub 'arn:aws:servicediscovery:${AWS::Region}:${AWS::AccountId}:service/srv-cruddur-backend-flask'
-          Port: !Ref ContainerPort
-          ContainerName: 'backend-flask'
-          ContainerPort: !Ref ContainerPort
+      # ServiceRegistries:
+      #   - RegistryArn: !Sub 'arn:aws:servicediscovery:${AWS::Region}:${AWS::AccountId}:service/srv-cruddur-backend-flask'
+      #     Port: !Ref ContainerPort
+      #     ContainerName: 'backend-flask'
+      #     ContainerPort: !Ref ContainerPort
+      ServiceConnectConfiguration:
+        Enabled: true
+        Namespace: "cruddur"
+        # TODO - If you want to log
+        # LogConfiguration
+        Services:
+          - DiscoveryName: backend-flask
+            PortName: backend-flask
+            ClientAliases:
+              - Port: !Ref ContainerPort
       ServiceName: !Ref ServiceName
       TaskDefinition: !Ref TaskDefinition
 
@@ -198,7 +208,7 @@ Resources:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
     Type: AWS::IAM::Role
     Properties:
-      RoleName: CruddurServiceExecutionRole
+      RoleName: CruddurServiceExecutionRole-Cfn
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -233,7 +243,7 @@ Resources:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
     Type: AWS::IAM::Role
     Properties:
-      RoleName: CruddurServiceTaskRole
+      RoleName: CruddurServiceTaskRole-Cfn
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -257,3 +267,9 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
         - arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
+
+Outputs:
+  ServiceSecurityGroupId:
+    Value: !GetAtt ServiceSG.GroupId
+    Export:
+      Name: !Sub "${AWS::StackName}ServiceSecurityGroupId"
