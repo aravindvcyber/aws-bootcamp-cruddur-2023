@@ -80,11 +80,9 @@ Resources:
           !Sub ${NetworkingStack}VpcId
       SecurityGroupIngress:
         - IpProtocol: tcp
-          SourceSecurityGroupId:
-            Fn::ImportValue:
-              !Sub ${ClusterStack}ALBSecurityGroupId
-          FromPort: 80
-          ToPort: 80
+          SourceSecurityGroupId: !GetAtt ALBSG.GroupId
+          FromPort: !Ref BackendPort
+          ToPort: !Ref BackendPort
           Description: ALB HTTP
   FargateService:
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-service.html
@@ -105,7 +103,7 @@ Resources:
         - TargetGroupArn:
             Fn::ImportValue:
               !Sub "${ClusterStack}BackendTGArn"
-          ContainerName: 'backend-flask'
+          ContainerName: !Ref ContainerName
           ContainerPort: !Ref ContainerPort
       NetworkConfiguration:
         AwsvpcConfiguration:
@@ -210,7 +208,7 @@ Resources:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
     Type: AWS::IAM::Role
     Properties:
-      RoleName: CruddurServiceExecutionRole
+      RoleName: CruddurServiceExecutionRole-Cfn
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -245,7 +243,7 @@ Resources:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
     Type: AWS::IAM::Role
     Properties:
-      RoleName: CruddurServiceTaskRole
+      RoleName: CruddurServiceTaskRole-Cfn
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
