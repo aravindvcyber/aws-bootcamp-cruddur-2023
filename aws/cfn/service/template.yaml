@@ -4,6 +4,7 @@ Description: |
   Fargate Service
   Execution Role
   Task Role
+
 Parameters:
   NetworkingStack:
     Type: String
@@ -67,23 +68,8 @@ Parameters:
   SecretsOtelExporterOltpHeaders:
     Type: String
     Default: 'arn:aws:ssm:ap-south-1:197942459570:parameter/cruddur/backend-flask/OTEL_EXPORTER_OTLP_HEADERS'
-
+  
 Resources:
-  ServiceSG:
-    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-security-group.html
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupName: !Sub "${AWS::StackName}AlbSG"
-      GroupDescription: Public Facing SG for our Cruddur ALB
-      VpcId:
-        Fn::ImportValue:
-          !Sub ${NetworkingStack}VpcId
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          SourceSecurityGroupId: !GetAtt ALBSG.GroupId
-          FromPort: !Ref BackendPort
-          ToPort: !Ref BackendPort
-          Description: ALB HTTP
   FargateService:
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-service.html
     Type: AWS::ECS::Service
@@ -96,10 +82,9 @@ Resources:
       DesiredCount: 1
       EnableECSManagedTags: true
       EnableExecuteCommand: true
-      HealthCheckGracePeriodSeconds: 100
+      HealthCheckGracePeriodSeconds: 0
       LaunchType: FARGATE
       LoadBalancers:
-        - TargetGroupArn: 'arn:aws:elasticloadbalancing:ap-south-1:197942459570:targetgroup/cruddur-backend-flask-tg/87ed2a3daf2d2b1d'
         - TargetGroupArn:
             Fn::ImportValue:
               !Sub "${ClusterStack}BackendTGArn"
@@ -109,7 +94,8 @@ Resources:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
           SecurityGroups:
-            - !GetAtt ServiceSG.GroupId
+            - Fn::ImportValue:
+                !Sub "${ClusterStack}ServiceSecurityGroupId"
           Subnets:
             Fn::Split:
               - ","
@@ -117,14 +103,9 @@ Resources:
                   !Sub "${NetworkingStack}PublicSubnetIds"
       PlatformVersion: LATEST
       PropagateTags: SERVICE
-      # ServiceRegistries:
-      #   - RegistryArn: !Sub 'arn:aws:servicediscovery:${AWS::Region}:${AWS::AccountId}:service/srv-cruddur-backend-flask'
-      #     Port: !Ref ContainerPort
-      #     ContainerName: 'backend-flask'
-      #     ContainerPort: !Ref ContainerPort
       ServiceConnectConfiguration:
         Enabled: true
-        Namespace: "cruddur"
+        Namespace: "cruddur-cfn"
         # TODO - If you want to log
         # LogConfiguration
         Services:
@@ -132,6 +113,11 @@ Resources:
             PortName: backend-flask
             ClientAliases:
               - Port: !Ref ContainerPort
+      #ServiceRegistries:
+      #  - RegistryArn: !Sub 'arn:aws:servicediscovery:${AWS::Region}:${AWS::AccountId}:service/srv-cruddur-backend-flask'
+      #    Port: !Ref ContainerPort
+      #    ContainerName: 'backend-flask'
+      #    ContainerPort: !Ref ContainerPort
       ServiceName: !Ref ServiceName
       TaskDefinition: !Ref TaskDefinition
 
@@ -175,7 +161,7 @@ Resources:
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:
-              awslogs-group: 'cruddur'
+              awslogs-group: 'cruddur-cfn'
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: !Ref ServiceName
           Environment:
@@ -217,7 +203,7 @@ Resources:
               Service: 'ecs-tasks.amazonaws.com'
             Action: 'sts:AssumeRole'
       Policies:
-        - PolicyName: 'cruddur-execution-policy'
+        - PolicyName: 'cruddur-execution-policy-cfn'
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
@@ -267,9 +253,3 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
         - arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
-
-Outputs:
-  ServiceSecurityGroupId:
-    Value: !GetAtt ServiceSG.GroupId
-    Export:
-      Name: !Sub "${AWS::StackName}ServiceSecurityGroupId"
