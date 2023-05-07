@@ -12,7 +12,7 @@ Parameters:
     Default: CrdNet
   ClusterStack:
     Type: String
-    Description: This is our cluster layer eg. ECS Cluster, ALB
+    Description: This is our cluster layer eg. ECS Cluster, ALB using Fargate Provider
     Default: CrdCluster
   ContainerPort:
     Type: Number
