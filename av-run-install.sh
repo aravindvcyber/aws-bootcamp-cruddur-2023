@@ -1,6 +1,17 @@
+cd /workspace
+wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+sudo ./sam-installation/install
+cd $THEIA_WORKSPACE_ROOT
+
 cd $THEIA_WORKSPACE_ROOT/frontend-react-js
 npm install
 cd ..
+
+cd $THEIA_WORKSPACE_ROOT
+pip install cfn-lint
+cargo install cfn-guard
+gem install cfn-toml
 
 cd $THEIA_WORKSPACE_ROOT/aws/lambdas/lambda-authorizer/
 npm install

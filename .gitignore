@@ -16,3 +16,8 @@ aws/lambdas/cruddur-upload-avatar/lambda_function.zip
 aws/lambdas/cruddur-upload-avatar/vendor/*
 aws/lambdas/cruddur-upload-avatar/lambda_function*
 aws/lambda/process-images/node_modules/*
+
+node_modules
+.aws-sam
+build.toml
+tmp/*

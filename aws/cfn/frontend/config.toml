@@ -1,0 +1,10 @@
+[deploy]
+bucket = 'cfn-sandbox-artifacts'
+region = 'ap-south-1'
+stack_name = 'CrdFrontend'
+
+[parameters]
+CertificateArn = 'arn:aws:acm:us-east-1:197942459570:certificate/5f16762e-d061-412f-9326-bf7fd98c2b3e'
+WwwBucketName = 'www.cruddur.sandbox.exploringserverless.com'
+RootBucketName = 'cruddur.sandbox.exploringserverless.com'
+HostedZone = 'sandbox.exploringserverless.com'
