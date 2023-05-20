@@ -3,15 +3,18 @@
         "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json": "file:///workspace/aws-bootcamp-cruddur-2023/aws/cfn/service/template.yaml"
     },
     "yaml.customTags": [
-      "!Equals sequence",
-      "!FindInMap sequence",
-      "!GetAtt",
-      "!GetAZs",
-      "!ImportValue",
-      "!Join sequence",
-      "!Ref",
-      "!Select sequence",
-      "!Split sequence",
-      "!Sub"
+      "!If",
+"!If sequence",
+"!Equals sequence",
+"!FindInMap sequence",
+"!GetAtt",
+"!GetAZs",
+"!If",
+"!ImportValue",
+"!Join sequence",
+"!Ref",
+"!Select sequence",
+"!Split sequence",
+"!Sub"
     ]
 }
