@@ -67,3 +67,5 @@ watchtower==3.0.1
 Werkzeug==2.3.4
 wrapt==1.15.0
 zipp==3.15.0
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
+
