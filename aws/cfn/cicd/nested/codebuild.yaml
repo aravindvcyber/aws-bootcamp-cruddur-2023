@@ -21,33 +21,73 @@ Parameters:
   CodeBuildTimeoutMins:
     Type: Number
     Default: 5
+  QueueTimeoutMins:
+    Type: Number
+    Default: 480
   BuildSpec:
     Type: String
-    Default: 'buildspec.yaml'
+    Default: 'backend-flask/buildspec.yml'
+  GithubRepoUrl:
+    Type: String
+    Default: 'https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023.git'
+  
 Resources:
-  CodeBuild:
+  CodeBuildProject:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
     Type: AWS::CodeBuild::Project
     Properties:
-      QueuedTimeoutInMinutes: !Ref CodeBuildTimeoutMins
+      Name: cfn-cruddur-backend-flask-bake-image
+      QueuedTimeoutInMinutes: !Ref QueueTimeoutMins
       ServiceRole: !GetAtt CodeBuildRole.Arn
+      BadgeEnabled: true
+      ConcurrentBuildLimit: 2
       # PrivilegedMode is needed to build Docker images
       # even though we have No Artifacts, CodePipeline Demands both to be set as CODEPIPLINE
       Artifacts:
-        Type: CODEPIPELINE
+        Type: NO_ARTIFACTS
       Environment:
         ComputeType: !Ref CodeBuildComputeType
         Image: !Ref CodeBuildImage
         Type: LINUX_CONTAINER
         PrivilegedMode: true
+        EnvironmentVariables:
+          - Name: AWS_DEFAULT_REGION
+            Value: "ap-south-1" 
+          - Name: ENVIRONMENT
+            Value: "PROD" 
+          - Name: AWS_REGION
+            Value: "ap-south-1"
+          - Name: AWS_CNAME
+            Value: "cruddur.sandbox.exploringserverless.com"
+          - Name: AWS_ACCESS_KEY_ID
+            Type: PARAMETER_STORE
+            Value: /cruddur/backend-flask/AWS_ACCESS_KEY_ID
+          - Name: AWS_SECRET_ACCESS_KEY
+            Type: PARAMETER_STORE
+            Value: /cruddur/backend-flask/AWS_SECRET_ACCESS_KEY
+          - Name: CONNECTION_URL
+            Type: PARAMETER_STORE
+            Value: /cruddur/backend-flask/CONNECTION_URL
+          - Name: OTEL_EXPORTER_OTLP_HEADERS
+            Type: PARAMETER_STORE
+            Value: /cruddur/backend-flask/OTEL_EXPORTER_OTLP_HEADERS
+          - Name: ROLLBAR_ACCESS_TOKEN
+            Type: PARAMETER_STORE
+            Value: /cruddur/backend-flask/ROLLBAR_ACCESS_TOKEN
+      TimeoutInMinutes: !Ref CodeBuildTimeoutMins
       LogsConfig:
         CloudWatchLogs:
           GroupName: !Ref LogGroupPath
           Status: ENABLED
           StreamName: !Ref LogStreamName
       Source:
-        Type: CODEPIPELINE
+        Type: GITHUB
+        Location: !Ref GithubRepoUrl
+        GitCloneDepth: 1
+        SourceIdentifier: prod
+        ReportBuildStatus: true
         BuildSpec: !Ref BuildSpec
+      SourceVersion: prod
   CodeBuildRole:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
     Type: AWS::IAM::Role
@@ -59,41 +99,36 @@ Resources:
           Principal:
             Service: [codebuild.amazonaws.com]
         Version: '2012-10-17'
-      Path: /
+      Path: /service-role/
       Policies:
-        - PolicyName: !Sub ${AWS::StackName}ECRPolicy
+        - PolicyName: !Sub ${AWS::StackName}S3access
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
               - Action:
-                - ecr:BatchCheckLayerAvailability
-                - ecr:CompleteLayerUpload
-                - ecr:GetAuthorizationToken
-                - ecr:InitiateLayerUpload
-                - ecr:BatchGetImage
-                - ecr:GetDownloadUrlForLayer
-                - ecr:PutImage
-                - ecr:UploadLayerPart
+                - s3:PutObject
+                - s3:GetObject
+                - s3:GetObjectVersion
+                - s3:GetBucketAcl
+                - s3:GetBucketLocation
                 Effect: Allow
-                Resource: "*"
-        - PolicyName: !Sub ${AWS::StackName}VPCPolicy
+                Resource:
+                  - !Sub arn:aws:s3:::codepipeline-ap-south-1-*
+                  - !Sub arn:aws:s3:::codepipeline-cruddur-sandbox-artifacts*
+        - PolicyName: !Sub ${AWS::StackName}ReportGroup
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
               - Action:
-                - ec2:CreateNetworkInterface
-                - ec2:DescribeDhcpOptions
-                - ec2:DescribeNetworkInterfaces
-                - ec2:DeleteNetworkInterface
-                - ec2:DescribeSubnets
-                - ec2:DescribeSecurityGroups
-                - ec2:DescribeVpcs
+                - codebuild:CreateReportGroup
+                - codebuild:CreateReport
+                - codebuild:UpdateReport
+                - codebuild:BatchPutTestCases
+                - codebuild:BatchPutCodeCoverages
                 Effect: Allow
-                Resource: "*"
-              - Action:
-                - ec2:CreateNetworkInterfacePermission
-                Effect: Allow
-                Resource: "*"
+                Resource:
+                  - !Sub arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:codepipeline-ap-south-1-*
+                  - !Sub arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:codepipeline-cruddur-sandbox-artifacts*
         - PolicyName: !Sub ${AWS::StackName}Logs
           PolicyDocument:
             Version: '2012-10-17'
@@ -104,9 +139,20 @@ Resources:
                 - logs:PutLogEvents
                 Effect: Allow
                 Resource:
-                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:${LogGroupPath}*
-                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:${LogGroupPath}:*
+                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/cruddur/codebuild/bake-service
+                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/cruddur/codebuild/bake-service:log-stream:backend-flask/*
+        - PolicyName: !Sub ${AWS::StackName}SSMAccessPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                - ssm:GetParameters
+                - ssm:GetParameter
+                Effect: Allow
+                Resource:
+                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/cruddur/backend-flask/*
+                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/CodeBuild/*
 Outputs:
   CodeBuildProjectName:
     Description: "CodeBuildProjectName"
-    Value: !Sub ${AWS::StackName}Project
+    Value: !Ref CodeBuildProject

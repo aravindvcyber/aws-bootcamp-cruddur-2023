@@ -8,5 +8,6 @@ stack_name = 'CrdCicd'
 ServiceStack = 'CrdSrvBackendFlask'
 ClusterStack = 'CrdCluster'
 GitHubBranch = 'prod'
-GithubRepo = 'aws-bootcamp-cruddur-2023'
+GithubRepo = 'aravindvcyber/aws-bootcamp-cruddur-2023'
+GithubRepoUrl = 'https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023.git'
 ArtifactBucketName = "codepipeline-cruddur-sandbox-artifacts"
