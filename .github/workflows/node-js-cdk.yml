@@ -1,0 +1,49 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths: ["thumbing-serverless-cdk/**"]
+  pull_request:
+    branches: [ "main" ]
+    paths: ["thumbing-serverless-cdk/**"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+        CI: false
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+      name: checkout mono repo
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: 'thumbing-serverless-cdk/package-lock.json'
+    - name: npm cd and install
+      working-directory: thumbing-serverless-cdk
+      run: |
+        npm ci
+    - name: npm build and test
+      working-directory: thumbing-serverless-cdk
+      run: |
+        npm run build --if-present
+    # - name: Notify deploy to Rollbar
+    #   uses: rollbar/github-deploy-action@2.1.2
+    #   id: rollbar_deploy
+    #   with:
+    #     environment: 'main'
+    #     version: ${{ github.sha }}
+    #   env:
+    #     ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN_FRONTEND }}
+    #     ROLLBAR_USERNAME: ${{ github.actor }}
