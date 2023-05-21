@@ -10,3 +10,8 @@ File.write(filename, content)
 
 filename = "frontend-react-js/.env-prod"
 File.write(filename, content)
+
+template = File.read 'erb/sync.env.erb'
+content = ERB.new(template).result(binding)
+filename = "sync.env"
+File.write(filename, content)
