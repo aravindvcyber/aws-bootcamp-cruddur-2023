@@ -25,7 +25,7 @@ Resources:
           - Action:
               - 's3:GetObject'
             Effect: Allow
-            Resource: !Sub 'arn:aws:s3:::${RootBucketName}/*'
+            Resource: !Sub 'arn:aws:s3:::${RootBucket}/*'
             Principal: '*'
   WWWBucket:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
@@ -77,7 +77,7 @@ Resources:
         Aliases:
           - cruddur.sandbox.exploringserverless.com
           - www.cruddur.sandbox.exploringserverless.com
-        Comment: Frontend React Js for Cruddur
+        Comment: Frontend React Js CDN for Cruddur
         Enabled: true
         HttpVersion: http2and3 
         DefaultRootObject: index.html
