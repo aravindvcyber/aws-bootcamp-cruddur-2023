@@ -9,7 +9,7 @@ import json
 
 tracer = trace.get_tracer("create.activity")
 class CreateActivity:
-  def run(message, user_handle, ttl):
+  def run(message, cognito_user_id, ttl):
     with tracer.start_as_current_span("create-activity-mock-data"):
       span = trace.get_current_span()
       now = datetime.now(timezone.utc).astimezone()
@@ -39,8 +39,8 @@ class CreateActivity:
       else:
         model['errors'] = ['ttl_blank']
 
-      if user_handle == None or len(user_handle) < 1:
-        model['errors'] = ['user_handle_blank']
+      if cognito_user_id == None or len(cognito_user_id) < 1:
+        model['errors'] = ['cognito_user_id_blank']
 
       if message == None or len(message) < 1:
         model['errors'] = ['message_blank'] 
@@ -56,7 +56,7 @@ class CreateActivity:
         }
         subsegment.put_metadata('key', dict, 'namespace')
         model['data'] = {
-          'handle':  user_handle,
+          'cognito_user_id':  cognito_user_id,
           'message': message
         }
         span.set_attribute("app.result_length", len(model['data']))
@@ -68,14 +68,19 @@ class CreateActivity:
         subsegment.put_metadata('key', dict, 'namespace')  
       else:
         # self.create_activity()
-        model['data'] = {
-          'uuid': uuid.uuid4(),
-          'display_name': 'Aravind Vadamalaimuthu',
-          'handle':  user_handle,
-          'message': message,
-          'created_at': now.isoformat(),
-          'expires_at': (now + ttl_offset).isoformat()
-        }
+        # model['data'] = {
+        #   'uuid': uuid.uuid4(),
+        #   'display_name': 'Aravind Vadamalaimuthu',
+        #   'handle':  cognito_user_id,
+        #   'message': message,
+        #   'created_at': now.isoformat(),
+        #   'expires_at': (now + ttl_offset).isoformat()
+        # }
+        expires_at = (now + ttl_offset)
+        uuid = CreateActivity.create_activity(cognito_user_id,message,expires_at)
+
+        object_json = CreateActivity.query_object_activity(uuid)
+        model['data'] = object_json
         span.set_attribute("app.result_length", len(model['data']))
         subsegment = xray_recorder.begin_subsegment('mock-data')
         dict = {
@@ -103,7 +108,7 @@ class CreateActivity:
   #   print("SQL--------------")
   #   db.query_commit(sql)
   
-  def create_activity(handle, message, ttl):
+  def create_activity(cognito_user_id, message, ttl):
     sql = db.template('activities','create')
     model = {
         'errors': None,
@@ -127,7 +132,7 @@ class CreateActivity:
     else:
         model['errors'] = ['ttl_blank']
     params = {
-      'handle': handle,
+      'cognito_user_id': cognito_user_id,
       'message': message,
       'expires_at': (now + ttl_offset).isoformat()
     }

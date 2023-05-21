@@ -9,7 +9,7 @@ import MessagesFeed from '../components/MessageFeed';
 import MessagesForm from '../components/MessageForm';
 
 // [TODO] Authenication
-import Cookies from 'js-cookie'
+//import Cookies from 'js-cookie'
 
 export default function MessageGroupPage() {
   const [messageGroups, setMessageGroups] = React.useState([]);
