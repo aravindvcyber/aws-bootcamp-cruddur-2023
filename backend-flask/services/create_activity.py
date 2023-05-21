@@ -78,7 +78,6 @@ class CreateActivity:
         # }
         expires_at = (now + ttl_offset)
         uuid = CreateActivity.create_activity(cognito_user_id,message,expires_at)
-
         object_json = CreateActivity.query_object_activity(uuid)
         model['data'] = object_json
         span.set_attribute("app.result_length", len(model['data']))

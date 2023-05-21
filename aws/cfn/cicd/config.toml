@@ -11,3 +11,4 @@ GitHubBranch = 'prod'
 GithubRepo = 'aravindvcyber/aws-bootcamp-cruddur-2023'
 GithubRepoUrl = 'https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023.git'
 ArtifactBucketName = "codepipeline-cruddur-sandbox-artifacts"
+BuildSpec = 'backend-flask/buildspec.yml'
