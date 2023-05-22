@@ -55,10 +55,10 @@ import routes.messages
 # simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
 # provider.add_span_processor(simple_processor)
 
-trace.set_tracer_provider(provider)
-tracer = trace.get_tracer(__name__)
+# trace.set_tracer_provider(provider)
+# tracer = trace.get_tracer(__name__)
 
-from time import strftime
+
 # CloudWatch Logs ----
 
 # import logging
