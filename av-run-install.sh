@@ -5,6 +5,7 @@ sudo ./sam-installation/install
 cd $THEIA_WORKSPACE_ROOT
 
 cd $THEIA_WORKSPACE_ROOT/frontend-react-js
+rm -rf node_modules
 npm install
 cd ..
 
@@ -77,7 +78,7 @@ rm session-manager-plugin.deb
 
 npm instal -g aws-cdk
 npm install -g npm@9.6.4
-rm package-lock.json
+#rm package-lock.json
 
 ./bin/ecr/login
 

@@ -43,10 +43,10 @@ const rollbarConfig = {
   environment: 'dev',
 };
 
-function TestError() {
-  const a = null;
-  return a.hello();
-}
+// function TestError() {
+//   const a = null;
+//   return a.hello();
+// }
 
 const router = createBrowserRouter([
   {
