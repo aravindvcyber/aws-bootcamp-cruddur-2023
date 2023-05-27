@@ -9,6 +9,7 @@ npm install
 cd ..
 
 cd $THEIA_WORKSPACE_ROOT
+bundle update --bundler
 pip install cfn-lint
 cargo install cfn-guard
 gem install cfn-toml
