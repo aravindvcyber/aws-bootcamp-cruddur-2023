@@ -25,7 +25,7 @@ Parameters:
     Default: cruddur-instance
   DBName:
     Type: String
-    Default: cruddur
+    Default: postgres
   DeletionProtection:
     Type: String
     AllowedValues:

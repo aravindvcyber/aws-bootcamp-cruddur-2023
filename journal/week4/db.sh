@@ -46,10 +46,20 @@ gp env DB_SG_ID="sg-02d094a5bdec82a18"
 export DB_SG_RULE_ID="sgr-0a8b5d15d6c931e79"
 gp env DB_SG_RULE_ID="sgr-0a8b5d15d6c931e79"
 
+export RDS_SG_ID="sg-03f726db1626779ac"
+gp env RDS_SG_ID="sg-03f726db1626779ac"
+export RDS_SG_RULE_ID="sgr-0914d04e4ab6df4da"
+gp env RDS_SG_RULE_ID="sgr-0914d04e4ab6df4da"
+
 
 aws ec2 modify-security-group-rules \
     --group-id $DB_SG_ID \
     --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
+
+
+aws ec2 modify-security-group-rules \
+    --group-id $RDS_SG_ID \
+    --security-group-rules "SecurityGroupRuleId=$RDS_SG_RULE_ID,SecurityGroupRule={IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
 
 export PROD_INSTANCE_ENDPOINT=cruddur-db-instance.cgrz56dxptjn.ap-south-1.rds.amazonaws.com
 gp env PROD_INSTANCE_ENDPOINT=cruddur-db-instance.cgrz56dxptjn.ap-south-1.rds.amazonaws.com
