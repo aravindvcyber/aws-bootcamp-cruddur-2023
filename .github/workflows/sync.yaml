@@ -15,13 +15,21 @@ jobs:
         node-version: [ 18.x]
     steps:
       - uses: actions/checkout@v3
+        name: checkout mono repo
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: cd frontend-react-js
-      - run: npm ci
-      - run: npm run build
+          cache: 'npm'
+          cache-dependency-path: 'frontend-react-js/package-lock.json'
+      - name: npm cd and install
+        working-directory: frontend-react-js
+        run: |
+          npm ci
+      - name: npm build and test
+        working-directory: frontend-react-js
+        run: |
+          npm run build --if-present
   deploy:
     name: Sync Static Build to S3 Bucket
     runs-on: ubuntu-latest
