@@ -22,6 +22,8 @@ This is the starting codebase that will be used in the FREE AWS Cloud Project Bo
 
 ![Cruddur Backend CodeBuild Status](https://codebuild.ap-south-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNXcrRDZ3akxYTFo3c2pjdHQ2NVFSWGNoSFB2REJFcXBlV1pPSEsyRE9xSXZWYVVXY3ZRdS9TVWZFS0lVWnQ1eEVMQjNSeW9nbFluRCt5aEI4N3JQWlU0PSIsIml2UGFyYW1ldGVyU3BlYyI6IlpLODdnSWJLMkZpUWtqdnAiLCJtYXRlcmlhbFNldFNlcmlhbCI6Mn0%3D&branch=main)
 
+[![Sync-Prod-Frontend](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/sync.yaml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/sync.yaml)
+
 ### My Site:
 
 https://cruddur.sandbox.exploringserverless.com/
