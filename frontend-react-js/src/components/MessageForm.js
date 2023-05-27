@@ -67,7 +67,7 @@ export default function ActivityForm(props) {
     post(url,payload_data,{
       auth: true,
       setErrors: setErrors,
-      success: function(){
+      success: function(data){
         console.log('data:',payload_data)
         if (payload_data.message_group_uuid) {
           console.log('redirect to message group')

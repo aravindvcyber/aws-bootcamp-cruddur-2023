@@ -5,7 +5,8 @@ import DesktopNavigation  from '../components/DesktopNavigation';
 import MessageGroupFeed from '../components/MessageGroupFeed';
 
 import {get} from 'lib/Requests';
-import {checkAuth, getAccessToken} from '../lib/CheckAuth';
+import {checkAuth} from '../lib/CheckAuth';
+import {get} from 'lib/Requests';
 
 export default function MessageGroupsPage() {
   const [messageGroups, setMessageGroups] = React.useState([]);
