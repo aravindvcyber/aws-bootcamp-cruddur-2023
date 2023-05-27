@@ -10,7 +10,7 @@ import { Auth } from 'aws-amplify';
 export default function ProfileInfo(props) {
 
   const [popped, setPopped] = React.useState(false);
-  const [userId, setUserId] = React.useState(props.user.cognito_user_uuid);
+  const [userId] = React.useState(props.user.cognito_user_uuid);
 
   const click_pop = (event) => {
     setPopped(!popped)
