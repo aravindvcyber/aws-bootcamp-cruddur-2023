@@ -13,6 +13,7 @@ tasks:
       cd $THEIA_WORKSPACE_ROOT
   - name: cfn
     before: |
+      bundle update --bundler
       pip install cfn-lint
       cargo install cfn-guard
       gem install cfn-toml
@@ -86,3 +87,4 @@ vscode:
     - mhutchie.git-graph
     - ms-azuretools.vscode-docker
     - kddejong.vscode-cfn-lint
+    - DanielSanMedium.dscodegpt

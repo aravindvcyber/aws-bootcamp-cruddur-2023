@@ -1,0 +1,4 @@
+[deploy]
+bucket = 'cfn-sandbox-artifacts'
+region = 'ap-south-1'
+stack_name = 'CrdMachinueUser'

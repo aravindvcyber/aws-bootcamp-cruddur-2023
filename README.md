@@ -7,7 +7,13 @@ This is the starting codebase that will be used in the FREE AWS Cloud Project Bo
 
 [![CodeQL](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/github-code-scanning/codeql)
 
-[![Node.js CI](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node.js.yml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node.js.yml)
+[![Node.js frontend-react-js CI](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node-js-frontend.yml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node-js-frontend.yml)
+
+[![Node.js thumbing-serverless-cdk CI](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node-js-cdk.yml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node-js-cdk.yml)
+
+[![Node.js lambda-authorizer CI](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node-js-lambda-authorizer.yml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node-js-lambda-authorizer.yml)
+
+[![Node.js process-images CI](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node-js-process-images.yml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/node-js-process-images.yml)
 
 [![Python application](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/python-app.yml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/python-app.yml)
 
@@ -51,5 +57,3 @@ The `/journal` directory contains
 - [x] [Week 9](journal/week9.md)
 - [x] [Week 10](journal/week10.md)
 - [x] [Week 11](journal/week11.md)
-- [ ] [Week 12](journal/week12.md)
-- [ ] [Week 13](journal/week13.md)

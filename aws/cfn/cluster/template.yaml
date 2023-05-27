@@ -16,6 +16,11 @@ Description: |
   - Backend Target Group
   - Frontend Target Group
 
+# Mappings:
+#   AWSRegionALBToHostedZoneId:
+#     ap-south-1:
+#       ALB: "ZP97RAFLXTNZK"
+
 Parameters:
   NetworkingStack:
     Type: String
@@ -90,6 +95,26 @@ Resources:
           Logging: DEFAULT
       ServiceConnectDefaults:
         Namespace: cruddur-cfn
+  ApiAliasA:
+    Type: "AWS::Route53::RecordSet"
+    Properties:
+      HostedZoneName: sandbox.exploringserverless.com.
+      Name: api.cruddur.sandbox.exploringserverless.com.
+      Type: A
+      AliasTarget:
+        #HostedZoneId: !FindInMap [ 'AWSRegionALBToHostedZoneId', !Ref "AWS::Region", "ALB" ]
+        HostedZoneId: !GetAtt ALB.CanonicalHostedZoneID
+        DNSName: !GetAtt ALB.DNSName
+  ApiAliasAAAA:
+    Type: "AWS::Route53::RecordSet"
+    Properties:
+      HostedZoneName: sandbox.exploringserverless.com.
+      Name: api.cruddur.sandbox.exploringserverless.com.
+      Type: AAAA
+      AliasTarget:
+        #HostedZoneId: !FindInMap [ 'AWSRegionALBToHostedZoneId', !Ref "AWS::Region", "ALB" ]
+        HostedZoneId: !GetAtt ALB.CanonicalHostedZoneID
+        DNSName: !GetAtt ALB.DNSName
   ALB:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticloadbalancingv2-loadbalancer.html
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer

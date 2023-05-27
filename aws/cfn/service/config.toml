@@ -2,3 +2,8 @@
 bucket = 'cfn-sandbox-artifacts'
 region = 'ap-south-1'
 stack_name = 'CrdSrvBackendFlask'
+
+[parameters]
+EnvFrontendUrl = 'https://cruddur.sandbox.exploringserverless.com'
+EnvBackendUrl = 'https://api.cruddur.sandbox.exploringserverless.com'
+DDBMessageTable = 'CrdDdb-DynamoDBTable-DDBYNRBXN8HD'
