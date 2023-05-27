@@ -1,4 +1,4 @@
-equire 'aws_s3_website_sync'
+require 'aws_s3_website_sync'
 require 'dotenv'
 
 task :sync do
