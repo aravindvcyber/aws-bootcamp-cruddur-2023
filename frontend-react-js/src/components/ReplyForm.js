@@ -63,6 +63,9 @@ export default function ReplyForm(props) {
     // } catch (err) {
     //   console.log(err);
     // }
+    if (props.setReplies) {
+      props.setReplies(current => [data,...current]);
+    }
       // reset and close the form
       setCount(0)
       setMessage('')
