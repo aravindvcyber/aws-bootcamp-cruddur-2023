@@ -53,6 +53,18 @@ Parameters:
   EnvBackendUrl:
     Type: String
     Default: "*"
+  EnvFrontendUrlGITPOD:
+    Type: String
+    Default: "*"
+  EnvBackendUrlGITPOD:
+    Type: String
+    Default: "*"
+  EnvFrontendUrlCODESPACE:
+    Type: String
+    Default: "*"
+  EnvBackendUrlCODESPACE:
+    Type: String
+    Default: "*"
   SecretsAWSAccessKeyId:
     Type: String
     Default: 'arn:aws:ssm:ap-south-1:197942459570:parameter/cruddur/backend-flask/AWS_ACCESS_KEY_ID'
@@ -182,6 +194,14 @@ Resources:
               Value: !Ref EnvFrontendUrl
             - Name: 'BACKEND_URL'
               Value: !Ref EnvBackendUrl
+            - Name: 'FRONTEND_URL_CODESPACE'
+              Value: !Ref EnvFrontendUrlCODESPACE
+            - Name: 'BACKEND_URL_CODESPACE'
+              Value: !Ref EnvBackendUrlCODESPACE
+            - Name: 'FRONTEND_URL_GITPOD'
+              Value: !Ref EnvFrontendUrlGITPOD
+            - Name: 'BACKEND_URL_GITPOD'
+              Value: !Ref EnvBackendUrlGITPOD
             - Name: 'AWS_DEFAULT_REGION'
               Value: !Ref AWS::Region
           Secrets:
