@@ -12,8 +12,9 @@ Parameters:
     Default: 'aravindvcyber/aws-bootcamp-cruddur-2023'
   ClusterStack:
     Type: String
-  ServiceStack:
+  ServiceName:
     Type: String
+    Default: backend-flask
   ArtifactBucketName:
     Type: String
   BuildSpec:
@@ -97,7 +98,7 @@ Resources:
                 #     !Sub ${ServiceStack}ServiceName
                 # We decided not use a cross-stack so we can tear
                 # down a service seperate from it.
-                ServiceName: backend-flask
+                ServiceName: !Ref ServiceName
   CodePipelineRole:
     Type: AWS::IAM::Role
     Properties:
