@@ -3,10 +3,15 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: 20
+      # docker: 20
+      python: 3.10
     commands:
       - echo "cd into $CODEBUILD_SRC_DIR/frontend"
       - cd $CODEBUILD_SRC_DIR
+      - echo "Installing Python 3.10"
+      - pyenv install 3.10.0  # Install Python 3.10 using pyenv
+      - pyenv global 3.10.0   # Set Python 3.10 as the default version
+      - python --version      # Verify the installed Python version
       - ./bin/frontend/generate-env
       - cd $CODEBUILD_SRC_DIR/frontend-react-js
       - AWS_ECR_PASSWORD=$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)
