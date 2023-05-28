@@ -8,9 +8,9 @@ phases:
     commands:
       - echo "cd into $CODEBUILD_SRC_DIR/frontend"
       - cd $CODEBUILD_SRC_DIR
-      - echo "Installing Python 3.10"
-      - pip install --upgrade pip
-      - pip install --upgrade python==3.10
+      # - echo "Installing Python 3.10"
+      # - pip install --upgrade pip
+      # - pip install --upgrade python==3.10
       - python --version
       - ./bin/frontend/generate-env
       - cd $CODEBUILD_SRC_DIR/frontend-react-js
