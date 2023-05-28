@@ -4,13 +4,13 @@ phases:
   install:
     runtime-versions:
       # docker: 20
-      python: 3.10
+      python: 3.11
     commands:
       - echo "cd into $CODEBUILD_SRC_DIR/backend"
       - cd $CODEBUILD_SRC_DIR
-      # - echo "Installing Python 3.10"
-      # - pip install --upgrade pip
-      # - pip install --upgrade python==3.10
+      - echo "Installing Python 3.10"
+      - pip install --upgrade pip
+      - pip install --upgrade python==3.10
       - python --version
       - ./bin/backend/generate-env
       - cd $CODEBUILD_SRC_DIR/backend-flask
