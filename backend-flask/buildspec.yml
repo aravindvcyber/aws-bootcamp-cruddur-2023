@@ -9,9 +9,9 @@ phases:
       - echo "cd into $CODEBUILD_SRC_DIR/backend"
       - cd $CODEBUILD_SRC_DIR
       - echo "Installing Python 3.10"
-      - pyenv install 3.10.0  # Install Python 3.10 using pyenv
-      - pyenv global 3.10.0   # Set Python 3.10 as the default version
-      - python --version      # Verify the installed Python version
+      - pip install --upgrade pip
+      - pip install --upgrade python==3.10
+      - python --version
       - ./bin/backend/generate-env
       - cd $CODEBUILD_SRC_DIR/backend-flask
       - AWS_ECR_PASSWORD=$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)
