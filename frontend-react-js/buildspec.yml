@@ -4,7 +4,7 @@ phases:
   install:
     runtime-versions:
       # docker: 20
-      python: 3.10
+      python: 3.9
     commands:
       - echo "cd into $CODEBUILD_SRC_DIR/frontend"
       - cd $CODEBUILD_SRC_DIR
