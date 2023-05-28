@@ -5,5 +5,15 @@ NO_COLOR='\033[0m'
 LABEL="db-drop"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
+if [ "$1" = "prod" ]; then
+  echo "Running in production mode"
+  URL=$PROD_CONNECTION_URL
+  NO_DB_CONNECTION_URL=$(sed 's#5432/cruddur#5432/postgres#g' <<<"$PROD_CONNECTION_URL")
+#   echo $NO_DB_CONNECTION_URL
+else
+  URL=$CONNECTION_URL
+  NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+fi
+
 NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
-psql $NO_DB_CONNECTION_URL -c "drop database IF EXISTS cruddur;"
+psql $NO_DB_CONNECTION_URL -c "DROP DATABASE IF EXISTS cruddur;"

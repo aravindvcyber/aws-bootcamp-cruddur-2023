@@ -5,7 +5,7 @@ sudo ./sam-installation/install
 cd $THEIA_WORKSPACE_ROOT
 
 cd $THEIA_WORKSPACE_ROOT/frontend-react-js
-rm -rf node_modules
+sudo rm -rf node_modules
 npm install
 cd ..
 
