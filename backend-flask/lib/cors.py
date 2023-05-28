@@ -23,9 +23,11 @@ def init_cors(app):
   pod = os.getenv('POD_HOST_URL')
   origins = [frontend, backend, pod, backendGitpod, frontendGitpod, backendCodespace, frontendCodespace, localhost,localhost2]
   print(origins)
+  filtered_origins = [origin for origin in origins if origin is not None]
+  print(filtered_origins)
   cors = CORS(
     app, 
-    resources={r"/api/*": {"origins": origins}},
+    resources={r"/api/*": {"origins": filtered_origins}},
     #expose_headers="location,link",
     #allow_headers="content-type,if-modified-since,traceparent",
     allow_headers="*",
