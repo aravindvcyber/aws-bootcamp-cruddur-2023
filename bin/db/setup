@@ -18,12 +18,18 @@ echo $(realpath .)
 # source "$bin_path/db/seed"
 # source "$bin_path/db/update_cognito_user_ids"
 
+# source "$DB_PATH/drop"
+# source "$DB_PATH/create"
 
-source "$DB_PATH/drop"
-source "$DB_PATH/create"
+echo "schema"
 source "$DB_PATH/schema-load"
+echo "seed"
 source "$DB_PATH/seed"
-# source "$DB_PATH/update_cognito_user_ids"
 
-python "$DB_PATH/migrate"
-python "$DB_PATH/update_cognito_user_ids"
+
+# Only for local
+# echo  "migrate"
+# # source "$DB_PATH/update_cognito_user_ids"
+# python "$DB_PATH/migrate"
+# echo  "update_cognito_user_ids"
+# python "$DB_PATH/update_cognito_user_ids"

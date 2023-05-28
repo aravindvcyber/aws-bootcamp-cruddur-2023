@@ -5,5 +5,15 @@ NO_COLOR='\033[0m'
 LABEL="db-create"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+if [ "$1" = "prod" ]; then
+  echo "Running in production mode"
+  URL=$PROD_CONNECTION_URL
+  NO_DB_CONNECTION_URL=$(sed 's#5432/cruddur#5432/postgres#g' <<<"$PROD_CONNECTION_URL")
+#   echo $NO_DB_CONNECTION_URL
+else
+  URL=$CONNECTION_URL
+  NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+fi
+
+
 psql $NO_DB_CONNECTION_URL -c "create database cruddur;"

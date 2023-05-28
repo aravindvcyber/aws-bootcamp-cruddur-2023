@@ -38,6 +38,7 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
 
     - name: Install dependencies
+      working-directory: backend-flask
       run: pip install -r requirements.txt
 
       # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
