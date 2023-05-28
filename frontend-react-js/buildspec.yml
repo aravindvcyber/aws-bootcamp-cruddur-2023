@@ -9,7 +9,8 @@ phases:
       - cd $CODEBUILD_SRC_DIR
       - ./bin/frontend/generate-env
       - cd $CODEBUILD_SRC_DIR/frontend-react-js
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $IMAGE_URL
+      - AWS_ECR_PASSWORD=$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)
+      - echo $AWS_ECR_PASSWORD | docker login --username AWS --password-stdin $IMAGE_URL
   build:
     commands:
       - echo Build started on `date`

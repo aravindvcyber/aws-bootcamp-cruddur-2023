@@ -330,6 +330,12 @@ docker exec -it <container name> /bin/bash
 
 ```sh
 aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
+
+or 
+
+AWS_ECR_PASSWORD=$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)
+echo $AWS_ECR_PASSWORD | docker login --username AWS --password-stdin $IMAGE_URL
+
 ```
 
 ![ecr login](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mk8wwswxnhjjh5bu9lto.png)
