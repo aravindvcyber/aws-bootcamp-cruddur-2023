@@ -22,6 +22,10 @@ class CreateActivity:
 
       now = datetime.now(timezone.utc).astimezone()
 
+      print(message, cognito_user_id, ttl)
+
+      print(ttl == '7-days')
+
       if (ttl == '30-days'):
         ttl_offset = timedelta(days=30) 
       elif (ttl == '7-days'):
@@ -77,8 +81,10 @@ class CreateActivity:
         #   'expires_at': (now + ttl_offset).isoformat()
         # }
         expires_at = (now + ttl_offset)
-        uuid = CreateActivity.create_activity(cognito_user_id,message,expires_at)
-        object_json = CreateActivity.query_object_activity(uuid)
+        print(expires_at)
+        uuid = CreateActivity.create_activity(cognito_user_id,message,ttl_offset)
+        print(uuid)
+        object_json = CreateActivity.query_object_activity(uuid['data'])
         model['data'] = object_json
         span.set_attribute("app.result_length", len(model['data']))
         subsegment = xray_recorder.begin_subsegment('mock-data')
@@ -107,30 +113,30 @@ class CreateActivity:
   #   print("SQL--------------")
   #   db.query_commit(sql)
   
-  def create_activity(cognito_user_id, message, ttl):
+  def create_activity(cognito_user_id, message, ttl_offset):
     sql = db.template('activities','create')
     model = {
         'errors': None,
         'data': None
     }
     now = datetime.now(timezone.utc).astimezone()
-    if (ttl == '30-days'):
-      ttl_offset = timedelta(days=30) 
-    elif (ttl == '7-days'):
-      ttl_offset = timedelta(days=7) 
-    elif (ttl == '3-days'):
-      ttl_offset = timedelta(days=3) 
-    elif (ttl == '1-day'):
-      ttl_offset = timedelta(days=1) 
-    elif (ttl == '12-hours'):
-      ttl_offset = timedelta(hours=12) 
-    elif (ttl == '3-hours'):
-      ttl_offset = timedelta(hours=3) 
-    elif (ttl == '1-hour'):
-        ttl_offset = timedelta(hours=1) 
-    else:
-        model['errors'] = ['ttl_blank']
-        return model
+    # if (ttl == '30-days'):
+    #   ttl_offset = timedelta(days=30) 
+    # elif (ttl == '7-days'):
+    #   ttl_offset = timedelta(days=7) 
+    # elif (ttl == '3-days'):
+    #   ttl_offset = timedelta(days=3) 
+    # elif (ttl == '1-day'):
+    #   ttl_offset = timedelta(days=1) 
+    # elif (ttl == '12-hours'):
+    #   ttl_offset = timedelta(hours=12) 
+    # elif (ttl == '3-hours'):
+    #   ttl_offset = timedelta(hours=3) 
+    # elif (ttl == '1-hour'):
+    #     ttl_offset = timedelta(hours=1) 
+    # else:
+    #     model['errors'] = ['ttl_blank']
+    #     return model
     params = {
       'cognito_user_id': cognito_user_id,
       'message': message,
