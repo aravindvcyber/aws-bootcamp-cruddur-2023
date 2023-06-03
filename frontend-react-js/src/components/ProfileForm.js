@@ -17,45 +17,46 @@ export default function ProfileForm(props) {
 
   const s3uploadkey = async (extension)=> {
     console.log('ext',extension)
-    // try {
-    //   const gateway_url = `${process.env.REACT_APP_API_GATEWAY_ENDPOINT_URL}/avatars/key_upload`
-    //   await getAccessToken()
-    //   const access_token = localStorage.getItem("access_token")
-    //   const json = {
-    //     extension: extension
-    //   }
-    //   const res = await fetch(gateway_url, {
-    //     method: "POST",
-    //     body: JSON.stringify(json),
-    //     headers: {
-    //       'Origin': process.env.REACT_APP_FRONTEND_URL,
-    //       'Authorization': `Bearer ${access_token}`,
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json'
-    //   }})
-    //   let data = await res.json();
-    //   if (res.status === 200) {
-    //     // console.log('presigned url',data)
-    //     return data.url
-    //   } else {
-    //     console.log(res)
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    const url = `${process.env.REACT_APP_BACKEND_URL}/api/profile/update`
-    const payload_data = {
-      bio: bio,
-      display_name: displayName
-    }
-    put(url,payload_data,{
-      auth: true,
-      setErrors: setErrors,
-      success: function(data){
-        setBio(null)
-        setDisplayName(null)
-        props.setPopped(false)
+    try {
+      const gateway_url = `${process.env.REACT_APP_API_GATEWAY_ENDPOINT_URL}/avatars/key_upload`
+      await getAccessToken()
+      const access_token = localStorage.getItem("access_token")
+      const json = {
+        extension: extension
       }
-    })
+      const res = await fetch(gateway_url, {
+        method: "POST",
+        body: JSON.stringify(json),
+        headers: {
+          'Origin': process.env.REACT_APP_FRONTEND_URL,
+          'Authorization': `Bearer ${access_token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      }})
+      let data = await res.json();
+      if (res.status === 200) {
+        // console.log('presigned url',data)
+        return data.url
+      } else {
+        console.log(res)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    // const url = `${process.env.REACT_APP_BACKEND_URL}/api/profile/update`
+    // const payload_data = {
+    //   bio: bio,
+    //   display_name: displayName
+    // }
+    // put(url,payload_data,{
+    //   auth: true,
+    //   setErrors: setErrors,
+    //   success: function(data){
+    //     setBio(null)
+    //     setDisplayName(null)
+    //     props.setPopped(false)
+    //   }
+    // })
   }
   const s3upload = async (event)=> {
     console.log('event',event)
@@ -71,6 +72,7 @@ export default function ProfileForm(props) {
     const fileparts = filename.split('.')
     const extension = fileparts[fileparts.length-1]
     const presignedurl = await s3uploadkey(extension)
+    console.log(presignedurl)
 
     try {
       console.log('s3upload')
