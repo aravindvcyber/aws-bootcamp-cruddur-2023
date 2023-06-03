@@ -81,6 +81,7 @@ class Db:
             returning_id = cur.fetchone()[0]
           conn.commit() 
           if is_returning_id:
+            print(returning_id)
             return returning_id
     except Exception as err:
       self.print_sql_err(err)
