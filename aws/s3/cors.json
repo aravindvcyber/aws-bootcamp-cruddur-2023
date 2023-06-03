@@ -7,7 +7,7 @@
             "PUT"
         ],
         "AllowedOrigins": [
-            "https://3000-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us93.gitpod.io", "https://cruddur.sandbox.exploringserverless.com", "https://aravindvcyber-stunning-space-potato-96jqj7vj5qcp694-3000.preview.app.github.dev"
+            "https://3000-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us98.gitpod.io", "https://cruddur.sandbox.exploringserverless.com", "https://aravindvcyber-stunning-space-potato-96jqj7vj5qcp694-3000.preview.app.github.dev"
         ],
         "ExposeHeaders": [
             "x-amz-server-side-encryption",
