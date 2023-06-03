@@ -130,6 +130,7 @@ class CreateActivity:
         ttl_offset = timedelta(hours=1) 
     else:
         model['errors'] = ['ttl_blank']
+        return model
     params = {
       'cognito_user_id': cognito_user_id,
       'message': message,
