@@ -11,9 +11,9 @@ parent_path = os.path.abspath(os.path.join(current_path, '..', '..', 'backend-fl
 sys.path.append(parent_path)
 from lib.db import db
 
-attrs = {
-  'endpoint_url': 'http://localhost:8000'
-}
+# attrs = {
+#   'endpoint_url': 'http://localhost:8000'
+# }
 # unset endpoint url for use with production database
 if len(sys.argv) == 2:
   if "prod" in sys.argv[1]:
