@@ -40,7 +40,7 @@ jobs:
           run: echo '${{ toJson(github.event) }}'
         - name: Approve or Reject
           id: approval
-          uses: "actions/github-script@v4"
+          uses: "actions/github-script@v6"
           with:
             script: |
               const response = await github.actions.createApproval({
@@ -51,7 +51,7 @@ jobs:
               });
               console.log(response.data);
         - name: Check Approval Status
-          uses: actions/github-script@v4
+          uses: actions/github-script@v6
           with:
             github-token: ${{ secrets.GITHUB_TOKEN }}
             script: |
