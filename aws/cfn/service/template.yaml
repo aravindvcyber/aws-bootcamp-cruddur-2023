@@ -14,6 +14,10 @@ Parameters:
     Type: String
     Description: This is our cluster layer eg. ECS Cluster, ALB using Fargate Provider
     Default: CrdCluster
+  AlbStack:
+    Type: String
+    Description: This is our alb layer eg. ECS Cluster, ALB 
+    Default: CrdAlb
   ContainerPort:
     Type: Number
     Default: 4567
@@ -102,7 +106,7 @@ Resources:
       LoadBalancers:
         - TargetGroupArn:
             Fn::ImportValue:
-              !Sub "${ClusterStack}BackendTGArn"
+              !Sub "${AlbStack}BackendTGArn"
           ContainerName: !Ref ContainerName
           ContainerPort: !Ref ContainerPort
       NetworkConfiguration:
@@ -135,7 +139,6 @@ Resources:
       #    ContainerPort: !Ref ContainerPort
       ServiceName: !Ref ServiceName
       TaskDefinition: !Ref TaskDefinition
-
   TaskDefinition:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-taskdefinition.html
     Type: 'AWS::ECS::TaskDefinition'
