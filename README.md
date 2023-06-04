@@ -20,7 +20,7 @@ This is the starting codebase that will be used in the FREE AWS Cloud Project Bo
 
 ![Cruddur Frontend CodeBuild Status](https://codebuild.ap-south-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiRDlRRXorTjl6anpBZmpEYkJPSERCdSt1OEE2QUFyY253UXpSR20yTkhIM3FmZ1hodVNKYVNmNjRJMmVabFI5dHhEZGcrNXlMMmNPNFVTMk5TOC9XelBVPSIsIml2UGFyYW1ldGVyU3BlYyI6InVNMXZOTld4NFF4bys4UlciLCJtYXRlcmlhbFNldFNlcmlhbCI6Mn0%3D&branch=main)
 
-![Cruddur Backend CodeBuild Status](https://codebuild.ap-south-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNXcrRDZ3akxYTFo3c2pjdHQ2NVFSWGNoSFB2REJFcXBlV1pPSEsyRE9xSXZWYVVXY3ZRdS9TVWZFS0lVWnQ1eEVMQjNSeW9nbFluRCt5aEI4N3JQWlU0PSIsIml2UGFyYW1ldGVyU3BlYyI6IlpLODdnSWJLMkZpUWtqdnAiLCJtYXRlcmlhbFNldFNlcmlhbCI6Mn0%3D&branch=main)
+![Cruddur Backend CodeBuild Status](https://codebuild.ap-south-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiQkNpRWZWYmVnWDBvcENpbmRNbHFPTUJBTnhiajZLQVMxN2crUDRIZ2lybklpMVRhMmRPelVjNk9PR29HOVRSN3pNMHhhTGVnNU1KdjNGbjFvbTZ5cFNnPSIsIml2UGFyYW1ldGVyU3BlYyI6IlduL1htVnRKKzI2Z1c5SEsiLCJtYXRlcmlhbFNldFNlcmlhbCI6Mn0%3D&branch=main)
 
 [![Sync-Prod-Frontend](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/sync.yaml/badge.svg)](https://github.com/aravindvcyber/aws-bootcamp-cruddur-2023/actions/workflows/sync.yaml)
 
@@ -31,13 +31,13 @@ https://cruddur.sandbox.exploringserverless.com/
 Here is the site: Do checkout, let me know some comments
 
 
-![domain with ssl](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dwndcc6751daf961egqk.png)
+![domain with ssl](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rt3i2hc9mf3zxecyvy8f.png)
 
 ![domain with ssl 2](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c2wzr3wubql9zjx4siyc.png)
 
 ![Cruddur Graphic](_docs/assets/cruddur-banner.jpg)
 
-![Cruddur Screenshot](_docs/assets/cruddur-screenshot.png)
+![Cruddur Screenshot](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/az9omb2qd0huckdaae56.png)
 
 ## Instructions
 
