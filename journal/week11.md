@@ -8,9 +8,12 @@ Service
 Frontend
 RDS
 Dynamodb
+Alb
 
 And also integrated the existing application with the new stacks
 
 Have also done the new refactorings for the backend and frontend
+
+
 
 
