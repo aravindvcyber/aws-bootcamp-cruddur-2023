@@ -3,7 +3,7 @@ aws-sam-translator==1.67.0
 aws-xray-sdk==2.12.0
 backoff==2.2.1
 blinker==1.6.2
-boto3==1.26.137
+boto3==1.26.151
 botocore==1.29.137
 certifi==2023.5.7
 cfn-lint==0.77.5
