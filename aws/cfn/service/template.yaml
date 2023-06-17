@@ -14,10 +14,14 @@ Parameters:
     Type: String
     Description: This is our cluster layer eg. ECS Cluster, ALB using Fargate Provider
     Default: CrdCluster
-  AlbStack:
+  CrdAlbBackendTGArn:
     Type: String
-    Description: This is our alb layer eg. ECS Cluster, ALB 
-    Default: CrdAlb
+    Description: This is our Alb backend target group arn
+    Default: CrdAlbBackendTGArn
+  # AlbStack:
+  #   Type: String
+  #   Description: This is our alb layer eg. ECS Cluster, ALB 
+  #   Default: CrdAlb
   ContainerPort:
     Type: Number
     Default: 4567
@@ -105,8 +109,9 @@ Resources:
       LaunchType: FARGATE
       LoadBalancers:
         - TargetGroupArn:
-            Fn::ImportValue:
-              !Sub "${AlbStack}BackendTGArn"
+            # Fn::ImportValue:
+              !Ref CrdAlbBackendTGArn
+              # !Sub "${AlbStack}BackendTGArn"
           ContainerName: !Ref ContainerName
           ContainerPort: !Ref ContainerPort
       NetworkConfiguration:
