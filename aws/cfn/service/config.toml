@@ -11,4 +11,5 @@ EnvBackendUrlGITPOD = 'https://4567-aravindvcyb-awsbootcamp-hzbqtsik84t.ws-us98.
 EnvFrontendUrlCODESPACE = 'https://aravindvcyber-stunning-space-potato-96jqj7vj5qcp694-3000.preview.app.github.dev'
 EnvBackendUrlCODESPACE = 'https://aravindvcyber-stunning-space-potato-96jqj7vj5qcp694-4567.preview.app.github.dev'
 DDBMessageTable = 'cruddur-messages'
+CrdAlbBackendTGArn = 'arn:aws:elasticloadbalancing:ap-south-1:197942459570:targetgroup/CrdAlb-Backe-4E75HYZCKGU5/6b62c9d8d8f2cdea'
 

@@ -89,3 +89,5 @@ vscode:
     - ms-azuretools.vscode-docker
     - kddejong.vscode-cfn-lint
     - DanielSanMedium.dscodegpt
+    - GitHub.copilot
+    - GitHub.copilot-labs
