@@ -83,11 +83,8 @@ vscode:
   extensions:
     - 42Crunch.vscode-openapi
     - cweijan.vscode-postgresql-client2
-    - ms-python.python  
-    - eamodio.gitlens
+    - ms-python.python
     - mhutchie.git-graph
     - ms-azuretools.vscode-docker
     - kddejong.vscode-cfn-lint
     - DanielSanMedium.dscodegpt
-    - GitHub.copilot
-    - GitHub.copilot-labs
