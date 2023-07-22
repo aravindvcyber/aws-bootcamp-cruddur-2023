@@ -25,8 +25,8 @@ postgresql://[user[:password]]@[netloc][:port][/dbname][?param1=value1&]
 
 createdb cruddur -h localhost -U postgres
 
-export CONNECTION_URL=postgresql://postgres:password@localhost:5432/cruddur
-gp env CONNECTION_URL=postgresql://postgres:password@localhost:5432/cruddur
+export CONNECTION_URL=postgresql://postgres:password@db:5432/cruddur
+gp env CONNECTION_URL=postgresql://postgres:password@db:5432/cruddur
 
 
 
