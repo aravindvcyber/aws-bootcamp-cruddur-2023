@@ -21,3 +21,5 @@ node_modules
 .aws-sam
 build.toml
 tmp/*
+backend-flask/.env-local
+backend-flask/.env-prod
