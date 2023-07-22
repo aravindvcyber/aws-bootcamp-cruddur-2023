@@ -8,6 +8,7 @@ if [ "$1" = "prod" ]; then
   echo $PROD_CONNECTION_URL
 else
   URL=$CONNECTION_URL
+  echo $CONNECTION_URL
 fi
 
 

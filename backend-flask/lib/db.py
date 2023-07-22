@@ -43,6 +43,9 @@ class Db:
     connection_url = os.getenv("CONNECTION_URL")
     # Use the below one when migrate and update id for prod as well
     # connection_url = os.getenv("PROD_CONNECTION_URL")
+    print("*********************")
+    print(connection_url)
+    print("*********************")
     self.pool = ConnectionPool(connection_url)
 
   # we want to commit data such as an insert
