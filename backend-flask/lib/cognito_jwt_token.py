@@ -133,6 +133,7 @@ def jwt_required(f=None, on_error=None):
             region=os.getenv("AWS_DEFAULT_REGION")
         )
         access_token = extract_access_token(request.headers)
+        print(access_token)
         try:
             claims = cognito_jwt_token.verify(access_token)
             # is this a bad idea using a global?

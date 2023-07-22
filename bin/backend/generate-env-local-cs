@@ -6,3 +6,6 @@ template = File.read 'erb/backend-flask-local-cs.env.erb'
 content = ERB.new(template).result(binding)
 filename = "backend-flask-local-cs-ready.env"
 File.write(filename, content)
+
+filename = "backend-flask/.env-local"
+File.write(filename, content)
