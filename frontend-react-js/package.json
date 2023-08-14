@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@opentelemetry/api": "^1.4.1",
-    "@opentelemetry/context-zone": "^1.13.0",
+    "@opentelemetry/context-zone": "^1.15.2",
     "@opentelemetry/exporter-trace-otlp-http": "^0.39.1",
     "@opentelemetry/instrumentation-document-load": "^0.32.1",
     "@opentelemetry/instrumentation-fetch": "^0.39.1",
