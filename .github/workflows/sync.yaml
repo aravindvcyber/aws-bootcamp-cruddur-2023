@@ -82,7 +82,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Configure AWS credentials from Test account
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: arn:aws:iam::197942459570:role/CrdSyncRole-Role-LY8UABQRSNZ8
           aws-region: ap-south-1
