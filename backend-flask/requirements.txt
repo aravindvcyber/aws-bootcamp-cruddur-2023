@@ -22,7 +22,7 @@ Jinja2==3.1.2
 jmespath==1.0.1
 jschema-to-python==1.2.3
 jsonpatch==1.32
-jsonpickle==3.0.1
+jsonpickle==3.3.0
 jsonpointer==2.3
 jsonschema==4.17.3
 junit-xml==1.9
@@ -46,7 +46,7 @@ psycopg==3.1.9
 psycopg-binary==3.1.9
 psycopg-pool==3.1.7
 pyasn1==0.5.0
-pydantic==1.10.7
+pydantic==1.10.13
 pyrsistent==0.19.3
 python-dateutil==2.8.2
 python-dotenv==1.0.0
@@ -61,10 +61,10 @@ sarif-om==1.0.4
 six==1.16.0
 sympy==1.12
 typing_extensions==4.5.0
-urllib3==1.26.15
+urllib3==1.26.19
 uuid==1.30
 watchtower==3.0.1
 Werkzeug==2.3.4
 wrapt==1.15.0
-zipp==3.15.0
+zipp==3.19.1
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
