@@ -14,7 +14,7 @@
     "@opentelemetry/sdk-trace-web": "^1.13.0",
     "@rollbar/react": "^0.11.1",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.4.3",
     "aws-amplify": "^5.1.4",
     "js-cookie": "^3.0.5",
