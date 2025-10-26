@@ -24,7 +24,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
-    "rollbar": "^2.26.1",
+    "rollbar": "^2.26.5",
     "web-vitals": "^3.3.1"
   },
   "scripts": {
