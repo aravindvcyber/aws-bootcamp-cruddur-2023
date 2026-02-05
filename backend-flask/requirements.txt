@@ -41,7 +41,7 @@ opentelemetry-sdk==1.18.0
 opentelemetry-semantic-conventions==0.39b0
 opentelemetry-util-http==0.39b0
 pbr==5.11.1
-protobuf==4.23.1
+protobuf==6.33.5
 psycopg==3.1.9
 psycopg-binary==3.1.9
 psycopg-pool==3.1.7
